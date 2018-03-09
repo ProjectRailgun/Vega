@@ -164,7 +164,7 @@ class AdminService:
         result['total'] = total_count
         return json_resp(result)
 
-    def query_bangumi_detail(self, bgm_id):
+    def query_bangumi_detail(self, bgm_id, type_id):
 
         api_url = 'http://api.bgm.tv/subject/' + bgm_id + '?responseGroup=large'
         r = bangumi_request.get(api_url)
@@ -172,7 +172,9 @@ class AdminService:
         if r.status_code > 399:
             r.raise_for_status()
 
-        return r.text
+        content = json.loads(r.text)
+        content['type'] = int(type_id)
+        return json.dumps(content)
 
     def list_bangumi(self, page, count, sort_field, sort_order, name, bangumi_type):
         try:
