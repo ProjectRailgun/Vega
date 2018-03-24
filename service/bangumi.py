@@ -226,6 +226,11 @@ class BangumiService:
                 filter(WatchProgress.user_id == user_id).\
                 all()
 
+            has_favorited_version = session.query(Favorites).\
+                filter(Favorites.bgm_id == bangumi.bgm_id).\
+                filter(Favorites.user_id == user_id).\
+                first()
+
             episodes = []
 
             watch_progress_hash_table = {}
@@ -247,6 +252,13 @@ class BangumiService:
 
             if favorite is not None:
                 bangumi_dict['favorite_status'] = favorite.status
+            else:
+                bangumi_dict['favorite_status'] = 0
+
+            if has_favorited_version is not None:
+                bangumi_dict['has_favorited_version'] = True
+            else:
+                bangumi_dict['has_favorited_version'] = False
 
             bangumi_dict['episodes'] = episodes
 

@@ -28,7 +28,11 @@ class WatchService:
                 filter(Favorites.user_id == user_id).\
                 first()
             if not favorite:
-                favorite = Favorites(bangumi_id=bangumi_id, user_id=user_id, status=status)
+                bangumi = session.query(Bangumi).\
+                    filter(Bangumi.delete_mark == None).\
+                    filter(Bangumi.id == bangumi_id).\
+                    one()
+                favorite = Favorites(bangumi_id=bangumi_id, user_id=user_id, status=status, bgm_id=bangumi.bgm_id)
                 session.add(favorite)
             else:
                 favorite.status = status

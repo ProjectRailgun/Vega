@@ -11,6 +11,7 @@ class Favorites(Base):
     id = Column(postgresql.UUID(as_uuid=True), primary_key=True, default=uuid4)
     user_id = Column(postgresql.UUID(as_uuid=True), nullable=False)
     bangumi_id = Column(postgresql.UUID(as_uuid=True), ForeignKey('bangumi.id'), nullable=False)
+    bgm_id = Column(Integer)
 
     status = Column(Integer, nullable=False, default=0)
 
