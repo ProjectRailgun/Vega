@@ -90,7 +90,7 @@ def update_pass():
 @user_api.route('/reset-pass', methods=['POST'])
 def reset_pass():
     """
-    reset password using token    
+    reset password using token
     """
     data = json.loads(request.get_data(True, as_text=True))
     if ('new_pass' in data) and ('new_pass_repeat' in data) and ('token' in data):
@@ -118,9 +118,10 @@ def request_reset_pass():
 def get_user_info():
     """
     get current user name and level
-    :return: response 
+    :return: response
     """
     user_info = {
+        'id': current_user.id,
         'name': current_user.name,
         'level': current_user.level,
         'email': current_user.email,
