@@ -68,7 +68,7 @@ class FeedScanner:
             SessionManager.Session.remove()
 
     def __create_thumbnail(self, episode, file_path):
-        time = '00:00:01.000'
+        time = '00:00:08.000'
         video_manager.create_episode_thumbnail(episode, file_path, time)
         thumbnail_path = '{0}/thumbnails/{1}.png'.format(str(episode.bangumi_id), episode.episode_no)
         thumbnail_file_path = '{0}/{1}'.format(self.base_path, thumbnail_path)
