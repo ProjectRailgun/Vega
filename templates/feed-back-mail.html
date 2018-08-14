@@ -5,7 +5,7 @@
     <title>用户反馈</title>
 </head>
 <body>
-<p>Dear {{ admin_name }},</p>
+<p>{{ admin_name }} ，你好：</p>
 <p>我们收到了与下列番組有关的用户反馈</p>
 <p><a href="{{ bangumi_url }}"><strong>{{ episode.bangumi.name }}</strong>:</a> 第 {{ episode.episode_no }} 话</p>
 <div class="video-file-list">Video File list</div>
@@ -27,5 +27,6 @@
 </div>
 <div class="feed-back-user">用户: {{ user.name }}</div>
 <div class="feed-back-user-email">邮件：{{ user.email }}</div>
+<p>{{info.site_name}}</p>
 </body>
 </html>

@@ -2,24 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Download Status Alert</title>
+    <title>{{info.site_name}} 管理系统消息</title>
 </head>
 <body>
-<p>Dear {{ info['username'] }},</p>
+<p>{{ info['username'] }} ，你好：</p>
 {% if info['sys'] %}
     <p>
-        We inform you because following bangumi which has some episodes resources updating behind schedule. But none of
-        these bangumi have an maintainer. So all admin will receive this alert
+        以下番组有部分剧集资源未在计划时间内更新，并且这些番组目前没有被指派维护者，因此所有管理员均会收到此提醒。
     </p>
 
 {% else %}
     <p>
-        We inform you because you are the maintainer of the following bangumi which has some episodes resources updating
-        behind schedule.
+        以下由你维护的番组有部分剧集资源未在计划时间内更新：
     </p>
 {% endif %}
-<p>To prevent a bangumi being in the list. You can either modify the maintainer of the bangumi to another admin, or
-    modify bangumi status to FINISHED</p>
 {% for bangumi_dict in bangumi_list %}
     <h4>
         <a href="{{ info['root_path'] + '/admin/bangumi/' + bangumi_dict['id'] }}">{{ bangumi_dict['name'] }}</a>
@@ -32,6 +28,8 @@
         {% endfor %}
     </ul>
 {% endfor %}
+<p>要避免继续收到相关提醒，可以将该番组指派给其他管理员维护，或将该番组状态更改为 FINISHED (若确实需要)。</p>
+<p>{{info.site_name}}</p>
 </body>
 </html>
 
