@@ -66,7 +66,6 @@ class FeedService(object):
                 search_result = re.search(regex, eps_title, re.U | re.I)
                 if search_result is not None:
                     return int(search_result.group(1))
-
             return -1
         except Exception:
             return -1
@@ -166,7 +165,7 @@ class FeedService(object):
             torrent['eps_no_list'] = []
             for content in torrent['content']:
                 file_name = content[0]
-                if not file_name.endswith(('.mp4',)):
+                if not file_name.endswith(('.mp4', '.mkv')):
                     continue
                 eps_no = self.parse_episode_number(file_name)
                 torrent['eps_no_list'].append(eps_no)

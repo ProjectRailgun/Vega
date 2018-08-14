@@ -51,7 +51,7 @@ class ImportTools:
         for dp, dn, fn in os.walk(download_dir):
             for f in fn:
                 (_, ext) = os.path.splitext(f)
-                if ext == '.mp4':
+                if (ext == '.mp4') or (ext == '.mkv'):
                     abs_path = os.path.join(dp, f)
                     relative_path = os.path.relpath(abs_path, download_dir)
                     file_list.append(relative_path)
