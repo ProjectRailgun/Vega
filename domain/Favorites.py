@@ -1,8 +1,9 @@
 from domain.base import Base
-from sqlalchemy import Column, Integer, ForeignKey
+from sqlalchemy import Column, Integer, ForeignKey, TIMESTAMP
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import relationship
 from uuid import uuid4
+from datetime import datetime
 
 
 class Favorites(Base):
@@ -14,6 +15,9 @@ class Favorites(Base):
     bgm_id = Column(Integer)
 
     status = Column(Integer, nullable=False, default=0)
+    update_time = Column(TIMESTAMP, default=datetime.utcnow, nullable=False)
+    # check_time is the last time user check this bangumi
+    check_time = Column(TIMESTAMP, default=datetime.utcnow, nullable=False)
 
     bangumi = relationship('Bangumi', uselist=False, back_populates='favorite')
 

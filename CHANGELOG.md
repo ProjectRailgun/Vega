@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.14.0
+
+- change my_bangumi API returns, add `eps_update_time`, `favorite_update_time` and `favorite_check_time`. for more details, check API document.
+- Add new API *check_favorite*.
+- replace all `datetime.now()` with `datetime.utcnow()`, if you have tasks in progress. make sure all tasks are cleared before update.
+- add database column in *favorites* table
+
+## 2.13.3
+
+- Update regex constant
+
+## 2.13.2
+
+- Update UserAgent of DMHY scraper
+
 ## 2.13.1
 
 - Fix a bug that a None value converted to an empty string in the json result.
