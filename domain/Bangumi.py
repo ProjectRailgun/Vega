@@ -14,7 +14,7 @@ class Bangumi(Base):
     __tablename__ = 'bangumi'
 
     id = Column(postgresql.UUID(as_uuid=True), primary_key=True, default=uuid4)
-    bgm_id = Column(Integer, nullable=False, unique=True)
+    bgm_id = Column(Integer, nullable=False)
     name = Column(TEXT, nullable=False)
     name_cn = Column(TEXT, nullable=False)
     type = Column(Integer, nullable=False)
