@@ -101,7 +101,7 @@ class BangumiService:
         finally:
             SessionManager.Session.remove()
 
-    def on_air_bangumi(self, user_id, type):
+    def on_air_bangumi(self, user_id, bangumi_type):
         session = SessionManager.Session()
         current_day = datetime.today()
         start_time = datetime(current_day.year, current_day.month, 1)
@@ -114,17 +114,19 @@ class BangumiService:
         end_time = datetime(next_year, next_month, 1)
 
         try:
-            result = session.query(distinct(Episode.bangumi_id), Bangumi).\
+            query_object = session.query(distinct(Episode.bangumi_id), Bangumi).\
                 join(Bangumi). \
                 options(joinedload(Bangumi.cover_image)).\
                 filter(Bangumi.delete_mark == None). \
-                filter(Bangumi.type == type).\
                 filter(Episode.airdate >= start_time).\
                 filter(Episode.airdate <= end_time). \
                 order_by(desc(getattr(Bangumi, 'air_date')))
 
+            if bangumi_type != -1:
+                query_object = query_object.filter(Bangumi.type == bangumi_type)
+
             bangumi_list = []
-            bangumi_id_list = [bangumi_id for bangumi_id, bangumi in result]
+            bangumi_id_list = [bangumi_id for bangumi_id, bangumi in query_object]
 
             if len(bangumi_id_list) == 0:
                 return json_resp({'data': []})
@@ -134,7 +136,7 @@ class BangumiService:
                 filter(Favorites.user_id == user_id).\
                 all()
 
-            for bangumi_id, bangumi in result:
+            for bangumi_id, bangumi in query_object:
                 bangumi_dict = row2dict(bangumi, Bangumi)
                 bangumi_dict['cover'] = utils.generate_cover_link(bangumi)
                 utils.process_bangumi_dict(bangumi, bangumi_dict)
