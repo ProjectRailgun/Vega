@@ -271,10 +271,10 @@ class WatchService:
             filter(Favorites.user_id == user_id).\
             first()
         if not favorite:
-            return json_resp({'data': 0, 'status': 0})
+            return json_resp({'data': 0, 'favorite_status':0, 'status': 0)
         else:
             favorite.check_time = datetime.utcnow()
-            return json_resp({'data': favorite.check_time, 'status': favorite.status})
+            return json_resp({'data': favorite.check_time, 'favorite_status': favorite.status, 'status': 0})
 
 
 watch_service = WatchService()
