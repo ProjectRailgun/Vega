@@ -215,6 +215,12 @@ class WatchService:
             else:
                 result = q.order_by(desc(Favorites.update_time)).all()
 
+            if count == -1:
+                result = result.all()
+            else:
+                offset = (page - 1) * count
+                result = result.offset(offset).limit(count).all()
+
             bangumi_id_list = [bangumi.id for favorite, bangumi in result]
             # print 'bangumi_id_list length: %d' % len(bangumi_id_list)
             if len(bangumi_id_list) == 0:
@@ -258,12 +264,6 @@ class WatchService:
                     if bangumi_id == bgm.id:
                         bangumi_dict['eps_update_time'] = episode_time
                 bangumi_dict_list.append(bangumi_dict)
-
-            if count == -1:
-                bangumi_list = bangumi_dict_list.all()
-            else:
-                offset = (page - 1) * count
-                bangumi_list = bangumi_dict_list.offset(offset).limit(count).all()
 
             return json_resp({'data': bangumi_list, 'status': 0})
 
