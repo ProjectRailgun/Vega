@@ -24,7 +24,7 @@ def recent_update():
 @home_api.route('/on_air', methods=['GET'])
 @login_required
 def on_air_bangumi():
-    bangumi_type = request.args.get('type', 2)
+    bangumi_type = int(request.args.get('type', -1))
     return bangumi_service.on_air_bangumi(current_user.id, bangumi_type)
 
 
