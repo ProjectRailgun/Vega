@@ -210,16 +210,16 @@ class WatchService:
                 filter(Favorites.user_id == user_id)
 
             if status is not None:
-                result = q.filter(Favorites.status == status).\
-                    order_by(desc(Favorites.update_time)).all()
+                q = q.filter(Favorites.status == status).\
+                    order_by(desc(Favorites.update_time))
             else:
-                result = q.order_by(desc(Favorites.update_time)).all()
+                q = q.order_by(desc(Favorites.update_time))
 
             if count == -1:
-                result = result.all()
+                result = q.all()
             else:
                 offset = (page - 1) * count
-                result = result.offset(offset).limit(count).all()
+                result = q.offset(offset).limit(count).all()
 
             bangumi_id_list = [bangumi.id for favorite, bangumi in result]
             # print 'bangumi_id_list length: %d' % len(bangumi_id_list)
