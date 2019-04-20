@@ -183,6 +183,8 @@ class BangumiService:
                 query_object = query_object.\
                     order_by(asc(getattr(Bangumi, sort_field)))
 
+            result_count = query_object.count()
+
             if count == -1:
                 bangumi_list = query_object.all()
             else:
