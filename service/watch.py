@@ -215,6 +215,8 @@ class WatchService:
             else:
                 q = q.order_by(desc(Favorites.update_time))
 
+            result_count = q.count()
+
             if count == -1:
                 result = q.all()
             else:
@@ -265,7 +267,7 @@ class WatchService:
                         bangumi_dict['eps_update_time'] = episode_time
                 bangumi_dict_list.append(bangumi_dict)
 
-            return json_resp({'data': bangumi_dict_list, 'status': 0})
+            return json_resp({'count': result_count, 'data': bangumi_dict_list, 'status': 0})
 
         finally:
             SessionManager.Session.remove()
