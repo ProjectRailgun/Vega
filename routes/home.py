@@ -34,7 +34,9 @@ def my_bangumi():
     status = int(request.args.get('status', -1))
     if status == -1:
         status = None
-    return watch_service.my_favorites(current_user.id, status)
+    page = int(request.args.get('page', 1))
+    count = int(request.args.get('count', 10))
+    return watch_service.my_favorites(current_user.id, status, page, count)
 
 
 @home_api.route('/episode/<episode_id>', methods=['GET'])

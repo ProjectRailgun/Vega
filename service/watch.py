@@ -200,7 +200,7 @@ class WatchService:
         finally:
             SessionManager.Session.remove()
 
-    def my_favorites(self, user_id, status=None):
+    def my_favorites(self, user_id, status=None, page=1, count=-1):
         session = SessionManager.Session()
         try:
             q = session.query(Favorites, Bangumi).\
@@ -259,7 +259,13 @@ class WatchService:
                         bangumi_dict['eps_update_time'] = episode_time
                 bangumi_dict_list.append(bangumi_dict)
 
-            return json_resp({'data': bangumi_dict_list, 'status': 0})
+            if count == -1:
+                bangumi_list = bangumi_dict_list.all()
+            else:
+                offset = (page - 1) * count
+                bangumi_list = bangumi_dict_list.offset(offset).limit(count).all()
+
+            return json_resp({'data': bangumi_list, 'status': 0})
 
         finally:
             SessionManager.Session.remove()
