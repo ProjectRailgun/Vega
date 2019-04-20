@@ -31,7 +31,7 @@ def on_air_bangumi():
 @home_api.route('/my_bangumi', methods=['GET'])
 @auth_user(0)
 def my_bangumi():
-    status = int(request.args.get('status', Favorites.WATCHING))
+    status = int(request.args.get('status', -1))
     if status == -1:
         status = None
     return watch_service.my_favorites(current_user.id, status)
