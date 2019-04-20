@@ -204,7 +204,7 @@ class BangumiService:
                         bangumi['favorite_status'] = fav.status
                 bangumi_dict_list.append(bangumi)
 
-            return json_resp({'data': bangumi_dict_list, 'total': total})
+            return json_resp({'count':len(bangumi_dict_list), 'data': bangumi_dict_list, 'total': total})
         finally:
             SessionManager.Session.remove()
 
