@@ -173,6 +173,8 @@ class BangumiService:
             else:
                 total = session.query(func.count(Bangumi.id)).scalar()
 
+            result_count = query_object.scalar()
+
             if sort_order == 'desc':
                 query_object = query_object.\
                     order_by(desc(getattr(Bangumi, sort_field)))
@@ -204,7 +206,7 @@ class BangumiService:
                         bangumi['favorite_status'] = fav.status
                 bangumi_dict_list.append(bangumi)
 
-            return json_resp({'count':len(bangumi_dict_list), 'data': bangumi_dict_list, 'total': total})
+            return json_resp({'count':result_count, 'data': bangumi_dict_list, 'total': total})
         finally:
             SessionManager.Session.remove()
 
