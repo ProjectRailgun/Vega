@@ -253,7 +253,7 @@ class WatchService:
                 bangumi_dict['favorite_status'] = fav.status
                 bangumi_dict['favorite_update_time'] = fav.update_time
                 bangumi_dict['favorite_check_time'] = fav.check_time
-                bangumi_dict['cover'] = utils.generate_cover_link(bangumi)
+                bangumi_dict['cover'] = utils.generate_cover_link(bgm)
                 utils.process_bangumi_dict(bgm, bangumi_dict)
                 for unwatched_count, bangumi_id in episode_aggregation:
                     if bangumi_id == bgm.id:
@@ -265,7 +265,7 @@ class WatchService:
                         bangumi_dict['eps_update_time'] = episode_time
                 bangumi_dict_list.append(bangumi_dict)
 
-            return json_resp({'data': bangumi_list, 'status': 0})
+            return json_resp({'data': bangumi_dict_list, 'status': 0})
 
         finally:
             SessionManager.Session.remove()
