@@ -13,7 +13,7 @@ from utils.common import utils
 admin_api = Blueprint('bangumi', __name__)
 
 
-@admin_api.route('/bangumi/list', methods=['GET'])
+@admin_api.route('/bangumi', methods=['GET'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
 def list_bangumi():
@@ -28,7 +28,7 @@ def list_bangumi():
                                       bangumi_type=bangumi_type)
 
 
-@admin_api.route('/bangumi/add', methods=['POST'])
+@admin_api.route('/bangumi', methods=['POST'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
 def add_bangumi():
@@ -36,7 +36,7 @@ def add_bangumi():
     return admin_service.add_bangumi(content, current_user.id)
 
 
-@admin_api.route('/bangumi/entry/<id>', methods=['PUT'])
+@admin_api.route('/bangumi/<id>', methods=['PUT'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
 def update_bangumi(id):
@@ -49,21 +49,21 @@ def update_bangumi(id):
     return admin_service.update_bangumi(id, data)
 
 
-@admin_api.route('/bangumi/entry/<id>', methods=['GET'])
+@admin_api.route('/bangumi/<id>', methods=['GET'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
 def get_bangumi(id):
     return admin_service.get_bangumi(id)
 
 
-@admin_api.route('/bangumi/entry/<id>', methods=['DELETE'])
+@admin_api.route('/bangumi/<id>', methods=['DELETE'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
 def delete_bangumi(id):
     return admin_service.delete_bangumi(id)
 
 
-@admin_api.route('/bangumi/search', methods=['GET'])
+@admin_api.route('/bangumi/query', methods=['GET'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
 def search_bangumi():
@@ -77,16 +77,11 @@ def search_bangumi():
         raise ClientError('Name cannot be None', 400)
 
 
-@admin_api.route('/bangumi/query', methods=['GET'])
+@admin_api.route('/bangumi/query/<bgm_id>', methods=['GET'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
-def query_one_bangumi():
-    bgm_id = request.args.get('bgmId', None)
-    type_id = request.args.get('typeId', None)
-    if bgm_id is not None:
-        return admin_service.query_bangumi_detail(bgm_id, type_id)
-    else:
-        return json_resp({})
+def query_one_bangumi(bgm_id):
+    return admin_service.query_bangumi_detail(bgm_id)
 
 
 @admin_api.route('/episode/list', methods=['GET'])
@@ -101,7 +96,7 @@ def episode_list():
     return admin_service.list_episode(page, count, sort_field, sort_order, status)
 
 
-@admin_api.route('/episode/add', methods=['POST'])
+@admin_api.route('/episode', methods=['POST'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
 def add_episode():
@@ -117,28 +112,28 @@ def episode_thumbnail(episode_id):
     return admin_service.update_thumbnail(episode_id, content['time'])
 
 
-@admin_api.route('/episode/entry/<episode_id>', methods=['GET'])
+@admin_api.route('/episode/<episode_id>', methods=['GET'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
 def get_episode(episode_id):
     return admin_service.get_episode(episode_id)
 
 
-@admin_api.route('/episode/entry/<episode_id>', methods=['PUT'])
+@admin_api.route('/episode/<episode_id>', methods=['PUT'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
 def update_episode(episode_id):
     return admin_service.update_episode(episode_id, json.loads(request.get_data(True, as_text=True)))
 
 
-@admin_api.route('/episode/entry/<episode_id>', methods=['DELETE'])
+@admin_api.route('/episode/<episode_id>', methods=['DELETE'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
 def delete_episode(episode_id):
     return admin_service.delete_episode(episode_id)
 
 
-@admin_api.route('/video/list', methods=['GET'])
+@admin_api.route('/video-file', methods=['GET'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
 def get_episode_video_file_list():
@@ -146,7 +141,7 @@ def get_episode_video_file_list():
     return admin_service.get_episode_video_file_list(episode_id)
 
 
-@admin_api.route('/video/add', methods=['POST'])
+@admin_api.route('/video-file', methods=['POST'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
 def add_video_file():
@@ -154,7 +149,7 @@ def add_video_file():
     return admin_service.add_video_file(video_dict)
 
 
-@admin_api.route('/video/entry/<video_file_id>', methods=['PUT'])
+@admin_api.route('/video-file/<video_file_id>', methods=['PUT'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
 def update_video_file(video_file_id):
@@ -162,7 +157,7 @@ def update_video_file(video_file_id):
     return admin_service.update_video_file(video_file_id, video_dict)
 
 
-@admin_api.route('/video/entry/<video_file_id>', methods=['DELETE'])
+@admin_api.route('/video-file/<video_file_id>', methods=['DELETE'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
 def delete_video_file(video_file_id):
