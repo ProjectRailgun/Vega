@@ -63,7 +63,7 @@ def delete_bangumi(id):
     return admin_service.delete_bangumi(id)
 
 
-@admin_api.route('/bangumi/query', methods=['GET'])
+@admin_api.route('/query', methods=['GET'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
 def search_bangumi():
@@ -77,7 +77,7 @@ def search_bangumi():
         raise ClientError('Name cannot be None', 400)
 
 
-@admin_api.route('/bangumi/query/<bgm_id>', methods=['GET'])
+@admin_api.route('/query/<bgm_id>', methods=['GET'])
 @login_required
 @auth_user(User.LEVEL_ADMIN)
 def query_one_bangumi(bgm_id):
