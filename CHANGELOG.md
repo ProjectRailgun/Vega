@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.14.6
+
+- update regex constants
+
+## 2.14.5
+
+- update example info in API Blueprint file. this change has no effect in anywhere.
+
+## 2.14.4
+
+- fix #150
+
 ## 2.14.3
 
 - fix typo in API Blueprint file, fix the incorrect return format of get episode API (although currently not used) in API Blueprint.
