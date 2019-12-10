@@ -313,6 +313,7 @@ class AdminService:
             bangumi.air_weekday = bangumi_dict['air_weekday']
             # bangumi.rss = bangumi_dict['rss']
             bangumi.status = bangumi_dict['status']
+            bangumi.type = bangumi_dict['type']
 
             bangumi.dmhy = bangumi_dict.get('dmhy')
             bangumi.acg_rip = bangumi_dict.get('acg_rip')
