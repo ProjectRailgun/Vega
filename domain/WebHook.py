@@ -21,7 +21,7 @@ class WebHook(Base):
     url = Column(TEXT, nullable=False)
     status = Column(Integer, nullable=False, default=4)
     consecutive_failure_count = Column(Integer, nullable=False, default=0)
-    register_time = Column(TIMESTAMP, nullable=False, default=datetime.now)
+    register_time = Column(TIMESTAMP, nullable=False, default=datetime.utcnow)
     created_by_uid = Column(postgresql.UUID(as_uuid=True), nullable=True)
     shared_secret = Column(TEXT, nullable=False)
     permissions = Column(TEXT, nullable=False, default='[]')

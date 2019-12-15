@@ -19,8 +19,8 @@ class User(Base):
     email = Column(String(512), unique=True, nullable=True)
     email_confirmed = Column(BOOLEAN, nullable=False, default=False)
 
-    register_time = Column(TIMESTAMP, nullable=False, default=datetime.now)
-    update_time = Column(TIMESTAMP, nullable=False, default=datetime.now, onupdate=datetime.now)
+    register_time = Column(TIMESTAMP, nullable=False, default=datetime.utcnow)
+    update_time = Column(TIMESTAMP, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     # predefined user level
     LEVEL_DEFAULT = 0
