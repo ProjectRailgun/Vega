@@ -42,7 +42,7 @@ class BANGUMI_MOE(AbstractScanner):
                 if not file_name.endswith(('.mp4', '.mkv')):
                     continue
                 eps_no = self.parse_episode_number(file_name)
-                if eps_no in eps_no_list:
+                if eps_no in eps_no_list or (len(resp_body['torrents']) == 1 and eps_no == -1):
                     eps_list.append({
                         'eps_no': eps_no,
                         'file_path': file_path,

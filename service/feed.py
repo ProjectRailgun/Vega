@@ -105,6 +105,8 @@ class FeedService(object):
         for item in feed_dict.entries:
             item_title = item['title']
             eps_no = self.parse_episode_number(item_title)
+            if len(feed_dict.entries) == 1 and eps_no == -1:
+                eps_no = 1
             title_list.append({'title': item_title, 'eps_no': eps_no})
 
         return json_resp({'data': title_list, 'status': 0})
@@ -117,6 +119,8 @@ class FeedService(object):
         for item in feed_dict.entries:
             item_title = item['title']
             eps_no = self.parse_episode_number(item_title)
+            if len(feed_dict.entries) == 1 and eps_no == -1:
+                eps_no = 1
             title_list.append({'title': item_title, 'eps_no': eps_no})
 
         return json_resp({'data': title_list, 'status': 0})
@@ -130,6 +134,8 @@ class FeedService(object):
         for item in feed_dict.entries:
             item_title = item['title']
             eps_no = self.parse_episode_number(item_title)
+            if len(feed_dict.entries) == 1 and eps_no == -1:
+                eps_no = 1
             title_list.append({'title': item_title, 'eps_no': eps_no})
 
         return json_resp({'data': title_list, 'status': 0})
@@ -169,6 +175,8 @@ class FeedService(object):
                 if not file_name.endswith(('.mp4', '.mkv')):
                     continue
                 eps_no = self.parse_episode_number(file_name)
+                if len(search_result['torrents']) == 1 and eps_no == -1:
+                    eps_no = 1
                 torrent['eps_no_list'].append(eps_no)
 
         return json_resp(search_result)
@@ -180,6 +188,8 @@ class FeedService(object):
         for item in feed_dict.entries:
             item_title = item['title']
             eps_no = self.parse_episode_number(item_title)
+            if len(feed_dict.entries) == 1 and eps_no == -1:
+                eps_no = 1
             title_list.append({'title': item_title, 'eps_no': eps_no})
 
         return json_resp({'data': title_list, 'status': 0})
@@ -203,6 +213,8 @@ class FeedService(object):
                 if media_file['ext'] != '.mp4':
                     continue
                 eps_no = self.parse_episode_number(media_file['name'])
+                if len(search_result) == 1 and eps_no == -1:
+                    eps_no = 1
                 item['eps_no_list'].append(eps_no)
         return json_resp({'data': search_result, 'status': 0})
 
