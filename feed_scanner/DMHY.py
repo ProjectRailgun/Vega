@@ -61,7 +61,9 @@ class DMHY(AbstractScanner):
         for item in feed_dict.entries:
             title = item['title']
             eps_no = self.parse_episode_number(title)
-            if (eps_no in eps_no_list or (len(feed_dict.entries) == 1 and eps_no == -1)) and hasattr(item.enclosures[0], 'href'):
+            if len(feed_dict.entries) == 1 and eps_no == -1:
+                eps_no = 1
+            if eps_no in eps_no_list and hasattr(item.enclosures[0], 'href'):
                 result_list.append((item.enclosures[0].href, eps_no, None, None))
 
         return result_list

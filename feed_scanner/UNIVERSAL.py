@@ -45,7 +45,9 @@ class UNIVERSAL(AbstractScanner):
                 if media_file['ext'] is not None and media_file['ext'].lower() != '.mp4':
                     continue
                 eps_no = self.parse_episode_number(media_file['name'])
-                if eps_no in eps_no_list or (len(item_array) == 1 and eps_no == -1):
+                if len(item_array) == 1 and eps_no == -1:
+                    eps_no = 1
+                if eps_no in eps_no_list:
                     eps_list.append({
                         'eps_no': eps_no,
                         'file_path': media_file['path'],
