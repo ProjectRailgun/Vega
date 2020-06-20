@@ -67,3 +67,9 @@ mail:
 rpc:
   server_host: localhost
   server_port: 8080
+
+# Universal Feed
+universal:
+  dmhy: https://res.iroha.io/dmhy/item
+  bangumi_moe: https://res.iroha.io/bangumi-moe/item
+  nyaa: https://res.iroha.io/nyaa/item

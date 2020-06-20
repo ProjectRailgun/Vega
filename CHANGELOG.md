@@ -1,5 +1,42 @@
 # Changelog
 
+## 3.0.1
+
+- Add nyaa url of universal in config-sample.yml
+- fix bug that nyaa cannot be accessed in some region.
+- fix bug in universal scanner which cannot recognize capital mp4 file extension.
+
+## 3.0.0
+
+### New Feature
+
+Add support for iroha indexer, you need upgrade Database see 
+[Database Upgrade Instruction](https://github.com/lordfriend/Albireo/blob/master/alembic/README.md). 
+You also need to upgrade your `config/config.yml` file by adding `universal section`, check the config-sample.yml.
+
+### Bug fix
+
+- fix bug that watch status of episode can be change from WATCHED to WATCHING.
+    this will affect the API usage.
+- fix bug (#159) trim download url.
+- fix bug (#154) sometimes the bgm_list from bgm.tv is None
+
+## 2.14.6
+
+- update regex constants
+
+## 2.14.5
+
+- update example info in API Blueprint file. this change has no effect in anywhere.
+
+## 2.14.4
+
+- fix #150
+
+## 2.14.3
+
+- fix typo in API Blueprint file, fix the incorrect return format of get episode API (although currently not used) in API Blueprint.
+
 ## 2.14.2
 
 - update import.py allow it to add multiple video files into an episode and provide a label for an episode.
