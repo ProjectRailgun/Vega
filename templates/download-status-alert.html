@@ -23,11 +23,12 @@
     <ul>
         {% for episode in bangumi_dict['episodes'] %}
             <li>
-                episode {{ episode['episode_no'] }} on air date is {{ episode['airdate'] }}
+                第 {{ episode['episode_no'] }} 话，放送时间为 {{ episode['airdate'] }}
             </li>
         {% endfor %}
     </ul>
 {% endfor %}
+<p>若某番组提醒过于频繁，可能是该字幕组更新延迟较高，可以将该番组报警超时值调整为更高（默认为 6 天）。</p>
 <p>要避免继续收到相关提醒，可以将该番组指派给其他管理员维护，或将该番组状态更改为 FINISHED (若确实需要)。</p>
 <p>{{info.site_name}}</p>
 </body>
