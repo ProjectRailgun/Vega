@@ -1,4 +1,3 @@
-from __future__ import print_function
 from datetime import datetime
 from utils.http import DateTimeEncoder, is_absolute_url
 from utils.SessionManager import SessionManager
@@ -143,7 +142,7 @@ class UserFavoriteEvent(Event):
                 filter(WebHookToken.web_hook_id == WebHook.id).\
                 filter(WebHook.status != WebHook.STATUS_IS_DEAD).\
                 all()
-            print(result)
+            print result
             if len(result) == 0:
                 logger.error('no web hook found for this token', exc_info=True)
                 return []

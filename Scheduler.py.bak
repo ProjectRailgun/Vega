@@ -1,11 +1,10 @@
-from __future__ import absolute_import
 import logging
 import os
 import errno
 
-from .utils.sentry import sentry_wrapper
+from utils.sentry import sentry_wrapper
 
-from .taskrunner.DownloadStatusScanner import download_status_scanner
+from taskrunner.DownloadStatusScanner import download_status_scanner
 
 FORMAT = '%(asctime)-15s %(module)s:%(lineno)d %(message)s'
 
@@ -33,21 +32,21 @@ from twisted.internet import reactor, threads
 
 
 from yaml import load
-from .utils.VideoManager import video_manager
+from utils.VideoManager import video_manager
 from twisted.internet.task import deferLater
-from .utils.DownloadManager import download_manager
+from utils.DownloadManager import download_manager
 
-from .taskrunner.InfoScanner import info_scanner
-from .taskrunner.FeedScanner import FeedScanner
-from .taskrunner.DmhyScanner import DmhyScanner
-from .taskrunner.BangumiMoeScanner import BangumiMoeScanner
-from .taskrunner.AcgripScanner import AcgripScanner
-from .taskrunner.LibyksoScanner import LibyksoScanner
-from .taskrunner.NyaaScanner import NyaaScanner
-from .taskrunner.UniversalScanner import UniversalScanner
-from .taskrunner.DeleteScanner import DeleteScanner
-from .rpc.rpc_interface import setup_server
-from .web_hook.keep_alive_checker import keep_alive_checker
+from taskrunner.InfoScanner import info_scanner
+from taskrunner.FeedScanner import FeedScanner
+from taskrunner.DmhyScanner import DmhyScanner
+from taskrunner.BangumiMoeScanner import BangumiMoeScanner
+from taskrunner.AcgripScanner import AcgripScanner
+from taskrunner.LibyksoScanner import LibyksoScanner
+from taskrunner.NyaaScanner import NyaaScanner
+from taskrunner.UniversalScanner import UniversalScanner
+from taskrunner.DeleteScanner import DeleteScanner
+from rpc.rpc_interface import setup_server
+from web_hook.keep_alive_checker import keep_alive_checker
 
 
 class Scheduler:

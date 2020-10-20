@@ -5,7 +5,6 @@ Revises: 3ffc63f8e34f
 Create Date: 2017-08-28 16:16:45.138681
 
 """
-from __future__ import print_function
 
 # revision identifiers, used by Alembic.
 revision = '875ae1099af9'
@@ -57,7 +56,7 @@ def upgrade():
         extname = os.path.splitext(path)[1]
         image_path = '{0}/cover{1}'.format(str(bangumi_id), extname)
         if not os.path.exists('{0}/{1}'.format(base_path, image_path)):
-            print('cover not found for {0}'.format(bangumi_id))
+            print 'cover not found for {0}'.format(bangumi_id)
             continue
         try:
             image_id = uuid4()
@@ -67,7 +66,7 @@ def upgrade():
             connection.execute(sa.text(
                 "UPDATE bangumi SET cover_image_id = '{0}' WHERE id = '{1}'".format(image_id, bangumi_id)))
         except Exception as error:
-            print(error)
+            print error
 
         # query episodes
         episode_result = connection.execute(sa.text(
@@ -80,7 +79,7 @@ def upgrade():
             episode_thumbnail_color = eps[2]
             thumbnail_path = '{0}/thumbnails/{1}.png'.format(str(bangumi_id), episode_no)
             if not os.path.exists(u'{0}/{1}'.format(base_path, thumbnail_path)):
-                print('thumbnail not found for {0}'.format(episode_id))
+                print 'thumbnail not found for {0}'.format(episode_id)
                 continue
             try:
                 image_id = uuid4()
@@ -90,8 +89,8 @@ def upgrade():
                 connection.execute(sa.text(
                     "UPDATE episodes SET thumbnail_image_id = '{0}' WHERE id = '{1}'".format(image_id, episode_id)))
             except Exception as error:
-                print(error)
-    print('image table import completed. Start reading image dimension and fix color')
+                print error
+    print 'image table import completed. Start reading image dimension and fix color'
 
     image_result = connection.execute(sa.text('SELECT image.id, image.file_path, image.dominant_color FROM image'))
     for image in image_result:
@@ -107,8 +106,8 @@ def upgrade():
                 "UPDATE image SET width = '{0}', height = '{1}', dominant_color = '{2}' WHERE id = '{3}'".format(
                     width, height, image_dominant_color, image_id)))
         except Exception as error:
-            print(error)
-    print('All done')
+            print error
+    print 'All done'
 
 
 def downgrade():
