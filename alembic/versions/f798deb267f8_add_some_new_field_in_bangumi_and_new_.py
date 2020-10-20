@@ -5,8 +5,15 @@ Revises:
 Create Date: 2016-09-11 11:32:48.365493
 
 """
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 
 # revision identifiers, used by Alembic.
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 revision = 'f798deb267f8'
 down_revision = None
 branch_labels = None

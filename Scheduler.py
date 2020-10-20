@@ -1,4 +1,12 @@
 from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
+from builtins import object
+from past.utils import old_div
 import logging
 import os
 import errno
@@ -50,7 +58,7 @@ from .rpc.rpc_interface import setup_server
 from .web_hook.keep_alive_checker import keep_alive_checker
 
 
-class Scheduler:
+class Scheduler(object):
 
     def __init__(self):
         fr = open('./config/config.yml', 'r')
@@ -80,8 +88,8 @@ class Scheduler:
 
     def start(self):
         self.start_scan_bangumi_moe()
-        deferLater(reactor, int(self.interval / 4), self.start_scan_dmhy)
-        deferLater(reactor, int(self.interval / 2), self.start_scan_acgrip)
+        deferLater(reactor, int(old_div(self.interval, 4)), self.start_scan_dmhy)
+        deferLater(reactor, int(old_div(self.interval, 2)), self.start_scan_acgrip)
         # libyk scanner don't have chance conflict with other scanner, so we can start simultaneously
         self.start_scan_libykso()
         self.start_scan_nyaa()  # usually this doesn't conflict

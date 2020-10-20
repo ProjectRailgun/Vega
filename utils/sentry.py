@@ -1,3 +1,11 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
+from builtins import object
 import yaml
 import logging
 
@@ -5,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 # noinspection PyPep8Naming
-class DefaultSentryClient:
+class DefaultSentryClient(object):
 
     def __init__(self):
         pass
@@ -17,7 +25,7 @@ class DefaultSentryClient:
         pass
 
 
-class SentryWrapper:
+class SentryWrapper(object):
 
     def __init__(self):
         self.sentry_middleware = DefaultSentryClient()

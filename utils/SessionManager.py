@@ -1,10 +1,18 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
+from builtins import object
 from sqlalchemy import create_engine
 from sqlalchemy.engine.url import URL
 from sqlalchemy.orm import scoped_session, sessionmaker
 from yaml import load
 
 
-class SessionManager:
+class SessionManager(object):
 
     __fr = open('./config/config.yml', 'r')
     __config = load(__fr)

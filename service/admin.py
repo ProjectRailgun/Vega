@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
+from builtins import object
 from sqlalchemy.orm.exc import NoResultFound
 
 from domain.Episode import Episode
@@ -22,7 +30,7 @@ import yaml
 import json
 import os
 import errno
-from urlparse import urlparse
+from urllib.parse import urlparse
 from utils.VideoManager import video_manager
 from utils.common import utils
 from utils.image import get_dominant_color, get_dimension
@@ -35,7 +43,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class AdminService:
+class AdminService(object):
 
     def __init__(self):
         fr = open('./config/config.yml', 'r')

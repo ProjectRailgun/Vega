@@ -1,9 +1,17 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
+from builtins import object
 import cfscrape, os, errno, logging, requests, pickle, traceback
 logger = logging.getLogger(__name__)
 user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
 
-class DMHYRequest:
+class DMHYRequest(object):
 
     def __init__(self):
 

@@ -1,4 +1,5 @@
-from base import Base
+from __future__ import absolute_import
+from .base import Base
 from sqlalchemy import TEXT, Column, DateTime, LargeBinary
 from sqlalchemy.dialects import postgresql
 from uuid import uuid4

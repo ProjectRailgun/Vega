@@ -1,9 +1,17 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
+from builtins import object
 import yaml
 import feedparser
-import urllib2
-import urllib
+import urllib.request, urllib.error, urllib.parse
+import urllib.request, urllib.parse, urllib.error
 import socket
 import re
 import logging
@@ -83,7 +91,7 @@ class FeedService(object):
 
         # use handlers
         if proxy is not None:
-            proxy_handler = urllib2.ProxyHandler(proxy)
+            proxy_handler = urllib.request.ProxyHandler(proxy)
             feed_dict = feedparser.parse(feed_url, handlers=[proxy_handler])
         else:
             feed_dict = feedparser.parse(feed_url)
@@ -98,7 +106,7 @@ class FeedService(object):
         return feed_dict
 
     def parse_dmhy(self, keywords):
-        keywords_encoded = urllib.quote_plus(keywords.replace(u'+', u' ').encode('utf-8'))
+        keywords_encoded = urllib.parse.quote_plus(keywords.replace(u'+', u' ').encode('utf-8'))
         feed_url = 'https://share.dmhy.org/topics/rss/rss.xml?keyword=%s' % (keywords_encoded,)
         feed_dict = self.parse_feed('dmhy', feed_url)
         title_list = []
@@ -112,7 +120,7 @@ class FeedService(object):
         return json_resp({'data': title_list, 'status': 0})
 
     def parse_acg_rip(self, keywords):
-        keywords_encoded = urllib.quote_plus(keywords.replace(u'+', u' ').encode('utf-8'))
+        keywords_encoded = urllib.parse.quote_plus(keywords.replace(u'+', u' ').encode('utf-8'))
         feed_url = 'https://acg.rip/.xml?term=%s' % (keywords_encoded,)
         feed_dict = self.parse_feed('acg.rip', feed_url)
         title_list = []
@@ -126,8 +134,8 @@ class FeedService(object):
         return json_resp({'data': title_list, 'status': 0})
 
     def parse_libyk_so(self, t, q):
-        t_encoded = urllib.quote_plus(t.replace(u'+', u' ').encode('utf-8'))
-        q_encoded = urllib.quote_plus(q.replace(u'+', u' ').encode('utf-8'))
+        t_encoded = urllib.parse.quote_plus(t.replace(u'+', u' ').encode('utf-8'))
+        q_encoded = urllib.parse.quote_plus(q.replace(u'+', u' ').encode('utf-8'))
         feed_url = 'https://utils.libyk.com/torrent/rss?m=magnet&t={0}&q={1}'.format(t_encoded, q_encoded)
         feed_dict = self.parse_feed('libyk_so', feed_url)
         title_list = []

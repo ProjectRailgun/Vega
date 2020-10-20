@@ -1,4 +1,13 @@
-import urlparse
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
+from builtins import object
+import urllib.parse
 
 from flask import jsonify, make_response
 from datetime import date, datetime
@@ -59,10 +68,10 @@ def is_valid_date(date_str):
 
 
 def is_absolute_url(test_url):
-    return bool(urlparse.urlparse(test_url).netloc)
+    return bool(urllib.parse.urlparse(test_url).netloc)
 
 
-class FileDownloader:
+class FileDownloader(object):
 
     def __init__(self):
         self.session = requests.Session()
@@ -82,7 +91,7 @@ class FileDownloader:
                     f.write(chunk)
 
 
-class BangumiRequest:
+class BangumiRequest(object):
 
     def __init__(self):
 
@@ -127,7 +136,7 @@ class BangumiRequest:
         return r
 
 
-class BangumiMoeRequest:
+class BangumiMoeRequest(object):
 
     def __init__(self):
 
@@ -182,7 +191,7 @@ class BangumiMoeRequest:
         return r
 
 
-class RPCRequest:
+class RPCRequest(object):
 
     def __init__(self):
         config = yaml.load(open('./config/config.yml', 'r'))

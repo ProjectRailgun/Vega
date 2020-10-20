@@ -1,3 +1,13 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import map
+from builtins import str
+from builtins import *
+from builtins import object
 from utils.SessionManager import SessionManager
 from utils.db import row2dict
 from utils.http import json_resp, rpc_request
@@ -20,7 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 # noinspection PyMethodMayBeStatic
-class WebHookService:
+class WebHookService(object):
 
     def __init__(self):
         self.ALLOWED_TAGS = [u'p'] + bleach.sanitizer.ALLOWED_TAGS

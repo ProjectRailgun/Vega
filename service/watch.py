@@ -1,3 +1,13 @@
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
+from builtins import object
+from past.utils import old_div
 from datetime import datetime
 
 from sqlalchemy.orm import joinedload
@@ -19,7 +29,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class WatchService:
+class WatchService(object):
 
     def favorite_bangumi(self, bangumi_id, user_id, status):
         session = SessionManager.Session()
@@ -171,7 +181,7 @@ class WatchService:
             # synchronize
             for record in records:
                 watch_status = WatchProgress.WATCHED if record.get('is_finished') else WatchProgress.WATCHING
-                last_watch_time = datetime.utcfromtimestamp(record['last_watch_time'] / 1000)
+                last_watch_time = datetime.utcfromtimestamp(old_div(record['last_watch_time'], 1000))
                 record_found = False
                 for watch_progress in watch_progress_list:
                     if str(watch_progress.episode_id) == record['episode_id']:

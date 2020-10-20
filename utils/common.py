@@ -1,8 +1,16 @@
 from __future__ import print_function
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
+from builtins import object
 import yaml
 import os
 import errno
-from urlparse import urlparse
+from urllib.parse import urlparse
 from datetime import datetime
 import logging
 from domain.Image import Image
@@ -15,7 +23,7 @@ logger = logging.getLogger(__name__)
 epoch = datetime.utcfromtimestamp(0)
 
 
-class CommonUtils:
+class CommonUtils(object):
 
     def __init__(self):
         fr = open('./config/config.yml', 'r')

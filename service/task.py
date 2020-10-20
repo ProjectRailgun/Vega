@@ -1,3 +1,12 @@
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
+from builtins import object
+from past.utils import old_div
 import yaml
 from sqlalchemy.orm import joinedload
 
@@ -16,7 +25,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class TaskService:
+class TaskService(object):
 
     def __init__(self):
         fr = open('./config/config.yml', 'r')
@@ -39,7 +48,7 @@ class TaskService:
             for bangumi in bangumi_list:
                 bgm = row2dict(bangumi, Bangumi)
                 # noinspection PyTypeChecker
-                delete_eta = int((bangumi.delete_mark + timedelta(minutes=self.delete_delay['bangumi']) - current).total_seconds() / 60)
+                delete_eta = int(old_div((bangumi.delete_mark + timedelta(minutes=self.delete_delay['bangumi']) - current).total_seconds(), 60))
                 bgm['delete_eta'] = delete_eta
                 bgm_list.append(bgm)
 
@@ -61,7 +70,7 @@ class TaskService:
                 bgm = row2dict(bangumi, Bangumi)
                 eps = row2dict(episode. Episode)
                 # noinspection PyTypeChecker
-                delete_eta = int((episode.delete_mark + timedelta(minutes=self.delete_delay['episode']) - current).total_seconds() / 60)
+                delete_eta = int(old_div((episode.delete_mark + timedelta(minutes=self.delete_delay['episode']) - current).total_seconds(), 60))
                 eps['delete_eta'] = delete_eta
                 eps['bangumi'] = bgm
                 eps_list.append(eps)

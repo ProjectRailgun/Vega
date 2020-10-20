@@ -1,22 +1,24 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
+from __future__ import absolute_import
 import argparse
 
 from sqlalchemy import func
 
-from utils.SessionManager import SessionManager
-from domain.Bangumi import Bangumi
-from domain.Favorites import Favorites
-from domain.WatchProgress import WatchProgress
-from domain.Episode import Episode
-from domain.VideoFile import VideoFile
-from domain.Image import Image
+from .utils.SessionManager import SessionManager
+from .domain.Bangumi import Bangumi
+from .domain.Favorites import Favorites
+from .domain.WatchProgress import WatchProgress
+from .domain.Episode import Episode
+from .domain.VideoFile import VideoFile
+from .domain.Image import Image
 import yaml
 import os
 import re
-from utils.VideoManager import VideoManager
-from utils.constants import episode_regex_tuple
-from utils.image import get_dominant_color, get_dimension
+from .utils.VideoManager import VideoManager
+from .utils.constants import episode_regex_tuple
+from .utils.image import get_dominant_color, get_dimension
 
 class ImportTools:
     def __init__(self):
@@ -160,7 +162,7 @@ class ImportTools:
                 else:
                     video_files = []
                     for f in files:
-                        print f
+                        print(f)
                         x = raw_input(">>> Episode Num and Label (separated by comma)")
                         if not x:
                             continue
@@ -196,10 +198,10 @@ if __name__ == '__main__':
     import_tools = ImportTools()
     if args.operate == 'search':
         # import_tools.search_bangumi(args.name)
-        print 'search bangumi not supported, please use web admin'
+        print('search bangumi not supported, please use web admin')
     elif args.operate == 'create':
         # import_tools.create_bangumi(args.id)
-        print 'create bangumi not supported, please use web admin'
+        print('create bangumi not supported, please use web admin')
     elif args.operate == 'update':
         import_tools.update_bangumi(args.uuid)
         import_tools.check_and_update_bangumi_status(args.uuid)

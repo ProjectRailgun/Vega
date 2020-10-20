@@ -1,3 +1,12 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
+from builtins import object
 from twisted.internet.defer import inlineCallbacks
 from utils.SessionManager import SessionManager
 from utils.http import bangumi_request, is_valid_date
@@ -15,7 +24,7 @@ import traceback
 logger = logging.getLogger(__name__)
 
 
-class InfoScanner:
+class InfoScanner(object):
 
     def __init__(self):
         fr = open('./config/config.yml', 'r')

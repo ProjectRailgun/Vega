@@ -1,3 +1,12 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
+from builtins import object
 from twisted.internet.task import LoopingCall
 from twisted.internet import reactor, threads
 from twisted.internet.defer import inlineCallbacks, returnValue
@@ -19,7 +28,7 @@ from utils.image import get_dominant_color, get_dimension
 
 logger = logging.getLogger(__name__)
 
-class FeedScanner:
+class FeedScanner(object):
     '''
     This scanner will scan the 'feed' table with special interval. if any record has a field torrent_file_id is null.
     scanner will add this record to download application and get the torrent_file_id
@@ -115,7 +124,7 @@ class FeedScanner:
                 download_url_dict[video_file.download_url] = []
             download_url_dict[video_file.download_url].append(video_file)
 
-        for download_url, same_torrent_video_file_list in download_url_dict.iteritems():
+        for download_url, same_torrent_video_file_list in download_url_dict.items():
             first_video_file = same_torrent_video_file_list[0]
             bangumi_path = self.base_path + '/' + str(first_video_file.bangumi_id)
             try:

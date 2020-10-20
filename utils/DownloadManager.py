@@ -1,3 +1,12 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
+from builtins import object
 from twisted.internet.defer import inlineCallbacks, returnValue
 from twisted.internet import threads
 from download_adapter.DelugeDownloader import DelugeDownloader
@@ -18,7 +27,7 @@ import yaml
 logger = logging.getLogger(__name__)
 
 
-class DownloadManager:
+class DownloadManager(object):
 
     def __init__(self, downloader_cls):
         self.downloader = downloader_cls(self.on_download_completed)

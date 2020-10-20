@@ -5,8 +5,15 @@ Revises: cb7650cd6a4d
 Create Date: 2018-02-25 12:01:36.224651
 
 """
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 
 # revision identifiers, used by Alembic.
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 revision = '0000e79a0e32'
 down_revision = 'cb7650cd6a4d'
 branch_labels = None

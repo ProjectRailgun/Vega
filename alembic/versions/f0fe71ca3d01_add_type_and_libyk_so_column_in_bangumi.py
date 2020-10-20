@@ -5,8 +5,15 @@ Revises: 126d03f9641b
 Create Date: 2017-01-16 19:04:07.059148
 
 """
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 
 # revision identifiers, used by Alembic.
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 revision = 'f0fe71ca3d01'
 down_revision = '126d03f9641b'
 branch_labels = None

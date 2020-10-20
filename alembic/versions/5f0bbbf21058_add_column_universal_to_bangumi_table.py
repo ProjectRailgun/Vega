@@ -5,8 +5,15 @@ Revises: 58c8b6f3c017
 Create Date: 2020-01-12 15:41:22.401572
 
 """
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 
 # revision identifiers, used by Alembic.
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 revision = '5f0bbbf21058'
 down_revision = '58c8b6f3c017'
 branch_labels = None

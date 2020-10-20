@@ -1,8 +1,15 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 import feedparser
 from feed_scanner.AbstractScanner import AbstractScanner
 from utils.exceptions import SchedulerError
 import socket
-import logging, urllib2, urllib
+import logging, urllib.request, urllib.error, urllib.parse, urllib.request, urllib.parse, urllib.error
 
 logger = logging.getLogger(__name__)
 
@@ -13,7 +20,7 @@ class ACG_RIP(AbstractScanner):
     def __init__(self, bangumi, episode_list):
         super(self.__class__, self).__init__(bangumi, episode_list)
         self.proxy = self._get_proxy('acg_rip')
-        keywords = urllib.quote_plus(bangumi.acg_rip.replace(u'+', u' ').encode('utf-8'))
+        keywords = urllib.parse.quote_plus(bangumi.acg_rip.replace(u'+', u' ').encode('utf-8'))
         self.feed_url = 'https://acg.rip/.xml?term=%s' % (keywords,)
         logger.debug(self.feed_url)
 
@@ -34,7 +41,7 @@ class ACG_RIP(AbstractScanner):
 
         # use handlers
         if self.proxy is not None:
-            proxy_handler = urllib2.ProxyHandler(self.proxy)
+            proxy_handler = urllib.request.ProxyHandler(self.proxy)
             feed_dict = feedparser.parse(self.feed_url, handlers=[proxy_handler])
         else:
             feed_dict = feedparser.parse(self.feed_url)

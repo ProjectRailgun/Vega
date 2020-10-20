@@ -1,9 +1,16 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 import feedparser
 import logging
 import socket
-import urllib
-from urlparse import urlparse, urlunparse
+import urllib.request, urllib.parse, urllib.error
+from urllib.parse import urlparse, urlunparse
 
 from feed_scanner.AbstractScanner import AbstractScanner
 from utils.exceptions import SchedulerError
@@ -18,7 +25,7 @@ class DMHY(AbstractScanner):
     def __init__(self, bangumi, episode_list):
         super(self.__class__, self).__init__(bangumi, episode_list)
         self.proxy = self._get_proxy('dmhy')
-        keywords = urllib.quote_plus(bangumi.dmhy.replace(u'+', u' ').encode('utf-8'))
+        keywords = urllib.parse.quote_plus(bangumi.dmhy.replace(u'+', u' ').encode('utf-8'))
         self.feed_url = 'https://share.dmhy.org/topics/rss/rss.xml?keyword=%s' % (keywords,)
 
     def _ensure_https(self, url):

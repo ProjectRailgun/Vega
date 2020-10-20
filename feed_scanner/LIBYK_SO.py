@@ -1,6 +1,13 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 from feed_scanner.AbstractScanner import AbstractScanner
 from utils.exceptions import SchedulerError
-import logging, urllib, urllib2, json, socket, feedparser
+import logging, urllib.request, urllib.parse, urllib.error, urllib.request, urllib.error, urllib.parse, json, socket, feedparser
 
 logger = logging.getLogger(__name__)
 
@@ -13,8 +20,8 @@ class LIBYK_SO(AbstractScanner):
         super(self.__class__, self).__init__(bangumi, episode_list)
         self.proxy = self._get_proxy('libyk_so')
         query_dict = json.loads(bangumi.libyk_so, encoding='utf-8')
-        t = urllib.quote_plus(query_dict[u't'].replace(u'+', u' ').encode('utf-8'))
-        q = urllib.quote_plus(query_dict[u'q'].replace(u'+', u' ').encode('utf-8'))
+        t = urllib.parse.quote_plus(query_dict[u't'].replace(u'+', u' ').encode('utf-8'))
+        q = urllib.parse.quote_plus(query_dict[u'q'].replace(u'+', u' ').encode('utf-8'))
         self.feed_url = 'https://utils.libyk.com/torrent/rss?m=magnet&t={0}&q={1}'.format(t, q)
         logger.debug(self.feed_url)
 
@@ -34,7 +41,7 @@ class LIBYK_SO(AbstractScanner):
 
         # use handlers
         if self.proxy is not None:
-            proxy_handler = urllib2.ProxyHandler(self.proxy)
+            proxy_handler = urllib.request.ProxyHandler(self.proxy)
             feed_dict = feedparser.parse(self.feed_url, handlers=[proxy_handler])
         else:
             feed_dict = feedparser.parse(self.feed_url)

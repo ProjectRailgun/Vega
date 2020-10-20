@@ -6,8 +6,15 @@ Create Date: 2017-05-28 09:48:10.337370
 
 """
 from __future__ import print_function
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import unicode_literals
 
 # revision identifiers, used by Alembic.
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
 revision = '3ffc63f8e34f'
 down_revision = '44401c981696'
 branch_labels = None
@@ -17,7 +24,7 @@ from alembic import op
 import sqlalchemy as sa
 import yaml
 import os
-from urlparse import urlparse
+from urllib.parse import urlparse
 from utils.image import get_dominant_color
 
 

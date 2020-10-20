@@ -5,8 +5,15 @@ Revises: f4413be17efa
 Create Date: 2016-10-16 11:29:13.724101
 
 """
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 
 # revision identifiers, used by Alembic.
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 revision = '1c38ccd23bb2'
 down_revision = 'f4413be17efa'
 branch_labels = None

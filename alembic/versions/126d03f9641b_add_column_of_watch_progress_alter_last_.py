@@ -5,8 +5,15 @@ Revises: f435b0c46cc2
 Create Date: 2016-10-22 18:39:06.466005
 
 """
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 
 # revision identifiers, used by Alembic.
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 revision = '126d03f9641b'
 down_revision = 'f435b0c46cc2'
 branch_labels = None

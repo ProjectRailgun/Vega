@@ -1,4 +1,13 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 # for video related operations
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
+from builtins import object
 import subprocess32 as subprocess
 import logging
 import os, errno
@@ -7,7 +16,7 @@ import json
 logger = logging.getLogger(__name__)
 
 
-class VideoManager:
+class VideoManager(object):
 
     def __init__(self):
         self.base_path = None

@@ -5,8 +5,16 @@ Revises: 6a72ba0df002
 Create Date: 2017-04-16 23:37:28.164781
 
 """
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 
 # revision identifiers, used by Alembic.
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
 revision = '2e8a8e95772e'
 down_revision = '6a72ba0df002'
 branch_labels = None

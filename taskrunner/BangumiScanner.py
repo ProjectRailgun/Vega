@@ -1,3 +1,13 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import range
+from builtins import *
+from builtins import object
 from utils.SessionManager import SessionManager
 from domain.Bangumi import Bangumi
 from domain.Episode import Episode
@@ -127,7 +137,7 @@ class BangumiScanner(object):
         """
         logger.info('scan bangumi %s', self.__class__.__name__)
         bangumi_list = yield threads.deferToThread(self.query_bangumi_list)
-        index_list = range(len(bangumi_list))
+        index_list = list(range(len(bangumi_list)))
         random.shuffle(index_list)
         for index in index_list:
             bangumi = bangumi_list[index]

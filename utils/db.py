@@ -1,3 +1,11 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
 def row2dict(row, cls):
     """
     convert SQLAlchemy row data to python dictionary
@@ -20,11 +28,11 @@ def row2dict(row, cls):
             continue
         v = getattr(row, col.name)
         current_type = str(col.type)
-        if current_type in convert.keys() and v is not None:
+        if current_type in list(convert.keys()) and v is not None:
             try:
                 d[col.name] = convert[current_type](v)
             except:
-                d[col.name] = "Error: Failed to convert using ", unicode(convert[col.type])
+                d[col.name] = "Error: Failed to convert using ", str(convert[col.type])
         elif v is not None:
             d[col.name] = v
     return d

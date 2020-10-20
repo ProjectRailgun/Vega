@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 from flask import request, Blueprint
 from flask_login import login_required, current_user
 from service.web_hook import web_hook_service

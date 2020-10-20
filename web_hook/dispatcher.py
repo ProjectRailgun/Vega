@@ -1,4 +1,13 @@
-from Queue import Queue
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
+from builtins import object
+from queue import Queue
 from twisted.internet import threads
 from twisted.internet.defer import inlineCallbacks
 from utils.exceptions import WebHookError
@@ -19,7 +28,7 @@ MAX_FAILURE_COUNT = 10
 
 
 # noinspection PyMethodMayBeStatic
-class Dispatcher:
+class Dispatcher(object):
 
     def __init__(self):
         self.event_queue = Queue()

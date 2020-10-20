@@ -5,8 +5,15 @@ Revises: 875ae1099af9
 Create Date: 2017-09-04 20:43:12.763509
 
 """
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 
 # revision identifiers, used by Alembic.
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 revision = '00a9ac502dd3'
 down_revision = '875ae1099af9'
 branch_labels = None

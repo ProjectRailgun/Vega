@@ -1,3 +1,4 @@
+from __future__ import print_function
 # from functools import wraps
 from twisted.web import server, resource
 from twisted.internet import reactor, endpoints, threads
@@ -25,8 +26,8 @@ rpc_exported_dict = {}
 def rpc_export(f):
     func_name = f.__name__
     rpc_exported_dict[func_name] = f
-    print func_name
-    print rpc_exported_dict
+    print(func_name)
+    print(rpc_exported_dict)
     # @wraps(f)
     # def wrapper(*args, **kwargs):
     #     return f(*args, **kwargs)

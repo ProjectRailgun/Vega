@@ -1,3 +1,4 @@
+from __future__ import print_function
 import yaml
 import os
 import errno
@@ -25,13 +26,13 @@ class CommonUtils:
         try:
             if not os.path.exists(self.base_path):
                 os.makedirs(self.base_path)
-                print 'create base dir %s successfully' % self.base_path
+                print('create base dir %s successfully' % self.base_path)
         except OSError as exception:
             if exception.errno == errno.EACCES:
                 # permission denied
                 raise exception
             else:
-                print exception
+                print(exception)
 
     def generate_thumbnail_link(self, episode, bangumi):
         thumbnail_url = '/pic/{0}/thumbnails/{1}.png'.format(str(bangumi.id), str(episode.episode_no))

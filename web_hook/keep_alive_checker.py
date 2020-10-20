@@ -1,3 +1,12 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
+from builtins import object
 from twisted.internet.defer import inlineCallbacks
 from twisted.internet.task import LoopingCall
 from twisted.internet import threads
@@ -8,7 +17,7 @@ from web_hook.dispatcher import dispatcher
 
 
 # noinspection PyMethodMayBeStatic
-class KeepAliveChecker:
+class KeepAliveChecker(object):
 
     def __init__(self):
         self.keep_alive_interval = 5 * 60  # seconds

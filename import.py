@@ -2,6 +2,14 @@
 
 from __future__ import print_function
 from __future__ import absolute_import
+from __future__ import division
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import input
+from builtins import str
+from builtins import *
+from builtins import object
 import argparse
 
 from sqlalchemy import func
@@ -20,7 +28,7 @@ from .utils.VideoManager import VideoManager
 from .utils.constants import episode_regex_tuple
 from .utils.image import get_dominant_color, get_dimension
 
-class ImportTools:
+class ImportTools(object):
     def __init__(self):
         pass
 
@@ -115,7 +123,7 @@ class ImportTools:
                                                      status=VideoFile.STATUS_DOWNLOADED))
                         break
             while True:
-                for eps in episodes.values():
+                for eps in list(episodes.values()):
                     if not eps:
                         continue
                     episode_num = str(eps.episode_no)
@@ -135,12 +143,12 @@ class ImportTools:
                     print (line)
 
                 print("Right? Y/N")
-                x = raw_input(">>> Input: ")
+                x = input(">>> Input: ")
                 if x == "Y":
                     video_manager = VideoManager()
                     video_manager.set_base_path(config['download']['location'])
                     for video_file in video_files:
-                        for eps in episodes.values():
+                        for eps in list(episodes.values()):
                             if eps.id == video_file.episode_id:
                                 video_manager.create_episode_thumbnail(eps, video_file.file_path, '00:00:01.000')
                                 thumbnail_path = '{0}/thumbnails/{1}.png'.format(str(bangumi_id), eps.episode_no)
@@ -163,7 +171,7 @@ class ImportTools:
                     video_files = []
                     for f in files:
                         print(f)
-                        x = raw_input(">>> Episode Num and Label (separated by comma)")
+                        x = input(">>> Episode Num and Label (separated by comma)")
                         if not x:
                             continue
                         arguments = x.split(',')

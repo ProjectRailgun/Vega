@@ -1,3 +1,13 @@
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import print_function
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
+from builtins import object
+from past.utils import old_div
 import logging
 import os
 
@@ -21,7 +31,7 @@ else:
     logger.setLevel(logging.INFO)
 
 
-class AnnounceService:
+class AnnounceService(object):
 
     def __init__(self):
         pass
@@ -95,8 +105,8 @@ class AnnounceService:
                                 image_url=announce_dict.get('image_url'),
                                 position=int(announce_dict.get('position', Announce.POSITION_BANNER)),
                                 sort_order=(announce_dict.get('sort_order', 0)),
-                                start_time=datetime.utcfromtimestamp(announce_dict.get('start_time', 0) / 1000),
-                                end_time=datetime.utcfromtimestamp(announce_dict.get('end_time', 0) / 1000))
+                                start_time=datetime.utcfromtimestamp(old_div(announce_dict.get('start_time', 0), 1000)),
+                                end_time=datetime.utcfromtimestamp(old_div(announce_dict.get('end_time', 0), 1000)))
             session.add(announce)
             session.commit()
             return json_resp({'message': 'ok'})
@@ -126,8 +136,8 @@ class AnnounceService:
             announce.image_url = announce_dict.get('image_url')
             announce.position = announce_dict.get('position', Announce.POSITION_BANNER)
             announce.sort_order = announce_dict.get('sort_order', 0)
-            announce.start_time = datetime.utcfromtimestamp(announce_dict.get('start_time', 0) / 1000)
-            announce.end_time = datetime.utcfromtimestamp(announce_dict.get('end_time', 0) / 1000)
+            announce.start_time = datetime.utcfromtimestamp(old_div(announce_dict.get('start_time', 0), 1000))
+            announce.end_time = datetime.utcfromtimestamp(old_div(announce_dict.get('end_time', 0), 1000))
             session.commit()
 
             return json_resp({'message': 'ok'})

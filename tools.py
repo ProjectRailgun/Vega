@@ -1,5 +1,12 @@
 from __future__ import print_function
 from __future__ import absolute_import
+from __future__ import division
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import range
+from builtins import *
 import argparse
 from .utils.SessionManager import SessionManager
 from werkzeug.security import generate_password_hash
@@ -25,10 +32,10 @@ from .domain.WebHookToken import WebHookToken
 from .utils.http import FileDownloader
 from .utils.image import get_dominant_color, get_dimension
 import yaml, os, errno, re
-from urlparse import urlparse
+from urllib.parse import urlparse
 from .alembic import command
 from .alembic.config import Config
-from StringIO import StringIO
+from io import StringIO
 
 parser = argparse.ArgumentParser(description='Tools for management database')
 group = parser.add_mutually_exclusive_group()
