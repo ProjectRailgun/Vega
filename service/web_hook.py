@@ -204,7 +204,7 @@ class WebHookService(object):
 
             return json_resp({'data': fav_dict_list})
         except NoResultFound as error:
-            logger.warn(error, exc_info=True)
+            logger.warning(error, exc_info=True)
             raise ClientError(ClientError.NOT_FOUND, 404)
         finally:
             SessionManager.Session.remove()

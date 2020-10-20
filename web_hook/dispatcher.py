@@ -107,7 +107,7 @@ class Dispatcher(object):
             logger.debug('event sent')
 
         def on_fail(error):
-            logger.warn(error)
+            logger.warning(error)
             # we don't update status for the failure request of initial status
             if event.event_type == EventType.TYPE_INITIAL:
                 return

@@ -47,7 +47,7 @@ import yaml
 import os
 
 # import sentry
-from .utils.sentry import sentry_wrapper
+from utils.sentry import sentry_wrapper
 
 isDebug = os.getenv('DEBUG', False)
 

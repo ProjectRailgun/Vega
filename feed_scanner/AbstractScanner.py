@@ -120,7 +120,7 @@ class AbstractScanner(object):
 
             return -1
         except Exception as error:
-            logger.warn(error)
+            logger.warning(error)
             return -1
 
     def parse_feed(self):

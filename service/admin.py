@@ -55,7 +55,7 @@ class AdminService(object):
         self.delete_delay = {'bangumi': 10, 'episode': 1}
 
         if config['task'].get('delete_delay') is None:
-            logger.warn('delete_delay section is not set, please update your config file')
+            logger.warning('delete_delay section is not set, please update your config file')
         else:
             self.delete_delay = config['task'].get('delete_delay')
 
@@ -137,7 +137,7 @@ class AdminService(object):
         try:
             bgm_content = r.json()
         except Exception as error:
-            logger.warn(error)
+            logger.warning(error)
             result['message'] = 'fail to query bangumi'
             return json_resp(result, 500)
 
@@ -294,7 +294,7 @@ class AdminService(object):
                 session.commit()
             except Exception as error:
                 sentry_wrapper.sentry_middleware.captureException()
-                logger.warn(error)
+                logger.warning(error)
                 # delete bangumi for download error
                 session.delete(bangumi)
                 session.commit()
@@ -641,7 +641,7 @@ class AdminService(object):
                 try:
                     os.remove(file_abs_path)
                 except Exception as error:
-                    logger.warn(error)
+                    logger.warning(error)
 
             rpc_request.send('delete_deluge_torrent', {'torrent_id': video_file.torrent_id})
             session.delete(video_file)

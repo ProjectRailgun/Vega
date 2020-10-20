@@ -262,7 +262,7 @@ class UserCredential(UserMixin):
             credential = cls(user)
             return credential
         except Exception as error:
-            logger.warn(error)
+            logger.warning(error)
             return None
         finally:
             SessionManager.Session.remove()

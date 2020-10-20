@@ -63,7 +63,7 @@ def is_valid_date(date_str):
         datetime.strptime(date_str, '%Y-%m-%d')
         return True
     except Exception as error:
-        logger.warn(error)
+        logger.warning(error)
         return False
 
 
@@ -113,21 +113,21 @@ class BangumiRequest(object):
             if exception.errno == errno.EACCES:
                 raise exception
             else:
-                logger.warn(exception)
+                logger.warning(exception)
 
     def __get_cookie_from_storage(self):
         try:
             with open(self.api_bgm_tv_session_path, 'r') as f:
                 self.session.cookies = requests.utils.cookiejar_from_dict(pickle.load(f))
         except Exception as error:
-            logger.warn(traceback.format_exc(error))
+            logger.warning(traceback.format_exc(error))
 
     def __save_cookie_to_storage(self):
         try:
             with open(self.api_bgm_tv_session_path, 'w') as f:
                 pickle.dump(requests.utils.dict_from_cookiejar(self.session.cookies), f)
         except Exception as error:
-            logger.warn(traceback.format_exc(error))
+            logger.warning(traceback.format_exc(error))
 
     def get(self, url):
         self.__get_cookie_from_storage()
@@ -158,21 +158,21 @@ class BangumiMoeRequest(object):
             if exception.errno == errno.EACCES:
                 raise exception
             else:
-                logger.warn(exception)
+                logger.warning(exception)
 
     def __get_cookie_from_storage(self):
         try:
             with open(self.api_bgm_tv_session_path, 'r') as f:
                 self.session.cookies = requests.utils.cookiejar_from_dict(pickle.load(f))
         except Exception as error:
-            logger.warn(traceback.format_exc(error))
+            logger.warning(traceback.format_exc(error))
 
     def __save_cookie_to_storage(self):
         try:
             with open(self.api_bgm_tv_session_path, 'w') as f:
                 pickle.dump(requests.utils.dict_from_cookiejar(self.session.cookies), f)
         except Exception as error:
-            logger.warn(traceback.format_exc(error))
+            logger.warning(traceback.format_exc(error))
 
     def post(self, url, payload):
         self.__get_cookie_from_storage()

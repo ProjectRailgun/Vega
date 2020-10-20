@@ -39,7 +39,7 @@ class SentryWrapper(object):
             __config = yaml.safe_load(__fr)
             return __config[key] if key in __config else None
         except IOError:
-            logger.warn('no sentry.yml exists')
+            logger.warning('no sentry.yml exists')
             return None
 
     def app_sentry(self, app):

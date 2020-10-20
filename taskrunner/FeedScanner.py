@@ -131,7 +131,7 @@ class FeedScanner(object):
                 torrent_id = yield download_manager.download(first_video_file.download_url, bangumi_path)
                 logger.info(torrent_id)
                 if torrent_id is None:
-                    logger.warn('episode %s already in download queue', str(first_video_file.episode_id))
+                    logger.warning('episode %s already in download queue', str(first_video_file.episode_id))
                 else:
                     yield threads.deferToThread(self.__update_video_file, same_torrent_video_file_list, torrent_id)
             except Exception as error:
@@ -161,7 +161,7 @@ class FeedScanner(object):
 
                         file_path = main_file['path']
                     else:
-                        logger.warn('no file found in %s', video_file.torrent_id)
+                        logger.warning('no file found in %s', video_file.torrent_id)
                         continue
                     video_file.file_path = file_path
                     video_file.status = VideoFile.STATUS_DOWNLOADED

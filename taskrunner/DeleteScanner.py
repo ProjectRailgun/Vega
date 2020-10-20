@@ -102,7 +102,7 @@ class DeleteScanner(object):
                 try:
                     threads.blockingCallFromThread(reactor, download_manager.remove_torrents, task_content['torrent_id_list'], False)
                 except Exception as error:
-                    logger.warn(error)
+                    logger.warning(error)
             self.__unshift_task_step(task_content, task, session)
 
             # remove files of bangumi

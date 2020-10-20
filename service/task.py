@@ -32,7 +32,7 @@ class TaskService(object):
         config = yaml.safe_load(fr)
         self.delete_delay = {'bangumi': 10, 'episode': 1}
         if config['task'].get('delete_delay') is None:
-            logger.warn('delete delay section is not set, please update your config file!')
+            logger.warning('delete delay section is not set, please update your config file!')
         else:
             self.delete_delay = config['task']['delete_delay']
 

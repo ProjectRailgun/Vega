@@ -101,7 +101,7 @@ class FeedService(object):
             socket.setdefaulttimeout(default_timeout)
 
         if feed_dict.bozo != 0:
-            logger.warn(feed_dict.bozo_exception)
+            logger.warning(feed_dict.bozo_exception)
             raise ClientError(feed_dict.bozo_exception.getMessage())
         return feed_dict
 
@@ -158,7 +158,7 @@ class FeedService(object):
         try:
             return r.text
         except Exception as error:
-            logger.warn(error)
+            logger.warning(error)
             result['message'] = 'fail to query bangumi'
             return json_resp(result, 500)
 
@@ -172,7 +172,7 @@ class FeedService(object):
         try:
             search_result = r.json()
         except Exception as error:
-            logger.warn(error)
+            logger.warning(error)
             result['message'] = 'fail to query bangumi'
             return json_resp(result, 500)
 
@@ -211,7 +211,7 @@ class FeedService(object):
         try:
             search_result = r.json()
         except Exception as error:
-            logger.warn(error)
+            logger.warning(error)
             result['message'] = 'fail to query universal {0}'.format(mode)
             return json_resp(result, 500)
         for item in search_result:

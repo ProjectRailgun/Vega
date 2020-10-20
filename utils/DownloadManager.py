@@ -96,7 +96,7 @@ class DownloadManager(object):
 
                             file_path = main_file['path']
                         else:
-                            logger.warn('no file found in %s', torrent_id)
+                            logger.warning('no file found in %s', torrent_id)
                             continue
                         video_file.file_path = file_path
                         video_file.status = VideoFile.STATUS_DOWNLOADED
@@ -142,8 +142,8 @@ class DownloadManager(object):
             episode_downloaded(episode_id=episode_id)
 
         def fail_to_get_files(result):
-            logger.warn('fail to get files of %s', torrent_id)
-            logger.warn(result)
+            logger.warning('fail to get files of %s', torrent_id)
+            logger.warning(result)
 
         d = self.downloader.get_files(torrent_id)
         d.addCallback(get_files)
