@@ -8,33 +8,33 @@ from builtins import str
 from builtins import range
 from builtins import *
 import argparse
-from .utils.SessionManager import SessionManager
+from utils.SessionManager import SessionManager
 from werkzeug.security import generate_password_hash
 
 # Unused domain is also necessary for initializing table
-from .domain.Bangumi import Bangumi
-from .domain.Episode import Episode
-from .domain.InviteCode import InviteCode
-from .domain.TorrentFile import TorrentFile
-from .domain.User import User
-from .domain.base import Base
-from .domain.Feed import Feed
-from .domain.Favorites import Favorites
-from .domain.ServerSession import ServerSession
-from .domain.WatchProgress import WatchProgress
-from .domain.Task import Task
-from .domain.VideoFile import VideoFile
-from .domain.Image import Image
-from .domain.Announce import Announce
-from .domain.WebHook import WebHook
-from .domain.WebHookToken import WebHookToken
+from domain.Bangumi import Bangumi
+from domain.Episode import Episode
+from domain.InviteCode import InviteCode
+from domain.TorrentFile import TorrentFile
+from domain.User import User
+from domain.base import Base
+from domain.Feed import Feed
+from domain.Favorites import Favorites
+from domain.ServerSession import ServerSession
+from domain.WatchProgress import WatchProgress
+from domain.Task import Task
+from domain.VideoFile import VideoFile
+from domain.Image import Image
+from domain.Announce import Announce
+from domain.WebHook import WebHook
+from domain.WebHookToken import WebHookToken
 
-from .utils.http import FileDownloader
-from .utils.image import get_dominant_color, get_dimension
+from utils.http import FileDownloader
+from utils.image import get_dominant_color, get_dimension
 import yaml, os, errno, re
 from urllib.parse import urlparse
-from .alembic import command
-from .alembic.config import Config
+from alembic import command
+from alembic.config import Config
 from io import StringIO
 
 parser = argparse.ArgumentParser(description='Tools for management database')

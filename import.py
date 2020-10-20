@@ -14,19 +14,19 @@ import argparse
 
 from sqlalchemy import func
 
-from .utils.SessionManager import SessionManager
-from .domain.Bangumi import Bangumi
-from .domain.Favorites import Favorites
-from .domain.WatchProgress import WatchProgress
-from .domain.Episode import Episode
-from .domain.VideoFile import VideoFile
-from .domain.Image import Image
+from utils.SessionManager import SessionManager
+from domain.Bangumi import Bangumi
+from domain.Favorites import Favorites
+from domain.WatchProgress import WatchProgress
+from domain.Episode import Episode
+from domain.VideoFile import VideoFile
+from domain.Image import Image
 import yaml
 import os
 import re
-from .utils.VideoManager import VideoManager
-from .utils.constants import episode_regex_tuple
-from .utils.image import get_dominant_color, get_dimension
+from utils.VideoManager import VideoManager
+from utils.constants import episode_regex_tuple
+from utils.image import get_dominant_color, get_dimension
 
 class ImportTools(object):
     def __init__(self):

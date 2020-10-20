@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from future import standard_library
 standard_library.install_aliases()
 from builtins import *
-from .Downloader import Downloader
+from Downloader import Downloader
 from yaml import load
 from deluge.ui.client import client
 from twisted.internet.defer import inlineCallbacks, returnValue
