@@ -28,7 +28,7 @@ class FeedService(object):
 
     def __init__(self):
         fr = open('./config/config.yml', 'r')
-        config = yaml.load(fr)
+        config = yaml.safe_load(fr)
         self.feedparser_config = config['feedparser']
         self.universal = config.get('universal')
 

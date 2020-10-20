@@ -28,7 +28,7 @@ class AbstractScanner(object):
 
     def __init__(self, bangumi, episode_list):
         fr = open('./config/config.yml', 'r')
-        config = yaml.load(fr)
+        config = yaml.safe_load(fr)
         self.base_path = config['download']['location']
         self.feedparser = config['feedparser']
         self.bangumi_path = self.base_path + '/' + str(bangumi.id)

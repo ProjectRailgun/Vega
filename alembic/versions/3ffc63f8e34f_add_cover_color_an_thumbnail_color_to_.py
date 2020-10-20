@@ -30,7 +30,7 @@ from utils.image import get_dominant_color
 
 def get_base_path():
     fr = open('./config/config.yml', 'r')
-    config = yaml.load(fr)
+    config = yaml.safe_load(fr)
     return config['download']['location']
 
 

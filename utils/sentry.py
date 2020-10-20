@@ -36,7 +36,7 @@ class SentryWrapper(object):
     def get_config(key):
         try:
             __fr = open('./config/sentry.yml', 'r')
-            __config = yaml.load(__fr)
+            __config = yaml.safe_load(__fr)
             return __config[key] if key in __config else None
         except IOError:
             logger.warn('no sentry.yml exists')

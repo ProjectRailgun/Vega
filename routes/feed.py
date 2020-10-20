@@ -13,14 +13,14 @@ from flask_login import login_required
 from service.auth import auth_user
 from utils.exceptions import ClientError
 from domain.User import User
-from yaml import load
+from yaml import safe_load
 
 import json
 
 feed_api = Blueprint('feed', __name__)
 
 fr = open('./config/config.yml', 'r')
-config = load(fr)
+config = safe_load(fr)
 universal_config = config.get('universal')
 
 

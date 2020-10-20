@@ -194,7 +194,7 @@ class BangumiMoeRequest(object):
 class RPCRequest(object):
 
     def __init__(self):
-        config = yaml.load(open('./config/config.yml', 'r'))
+        config = yaml.safe_load(open('./config/config.yml', 'r'))
         if 'rpc' in config:
             self.server_host = config['rpc']['server_host']
             self.server_port = config['rpc']['server_port']

@@ -56,7 +56,7 @@ class RPCInterface(resource.Resource):
 
 
 def setup_server():
-    config = yaml.load(open('./config/config.yml', 'r'))
+    config = yaml.safe_load(open('./config/config.yml', 'r'))
     server_port = 8080
     if 'rpc' in config:
         server_port = config['rpc']['server_port']

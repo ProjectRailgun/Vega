@@ -47,7 +47,7 @@ class AdminService(object):
 
     def __init__(self):
         fr = open('./config/config.yml', 'r')
-        config = yaml.load(fr)
+        config = yaml.safe_load(fr)
         self.base_path = config['download']['location']
         self.image_domain = config['domain']['image']
         self.file_downloader = FileDownloader()

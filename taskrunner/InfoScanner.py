@@ -28,7 +28,7 @@ class InfoScanner(object):
 
     def __init__(self):
         fr = open('./config/config.yml', 'r')
-        config = yaml.load(fr)
+        config = yaml.safe_load(fr)
         if 'info_scanner' in config['task']:
             scan_time = '16:00'
             scan_time_format = '%H:%M'

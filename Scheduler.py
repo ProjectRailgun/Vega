@@ -40,7 +40,7 @@ else:
 from twisted.internet import reactor, threads
 
 
-from yaml import load
+from yaml import safe_load
 from utils.VideoManager import video_manager
 from twisted.internet.task import deferLater
 from utils.DownloadManager import download_manager
@@ -62,7 +62,7 @@ class Scheduler(object):
 
     def __init__(self):
         fr = open('./config/config.yml', 'r')
-        config = load(fr)
+        config = safe_load(fr)
         self.interval = int(config['task']['interval']) * 60
         self.base_path = config['download']['location']
         self.feedparser = config['feedparser']

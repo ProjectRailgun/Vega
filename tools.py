@@ -108,7 +108,7 @@ elif args.db_init:
 
 elif args.cover:
     fr = open('./config/config.yml', 'r')
-    config = yaml.load(fr)
+    config = yaml.safe_load(fr)
     download_location = config['download']['location']
     session = SessionManager.Session()
     cur = session.query(Bangumi)

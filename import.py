@@ -90,7 +90,7 @@ class ImportTools(object):
 
     def update_bangumi(self, bangumi_id=None):
         fr = open('./config/config.yml', 'r')
-        config = yaml.load(fr)
+        config = yaml.safe_load(fr)
         download_dir = config['download']['location'] + '/' + str(bangumi_id)
         files = self.__list_file_recursively(download_dir)
 

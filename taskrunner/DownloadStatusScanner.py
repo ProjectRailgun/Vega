@@ -39,7 +39,7 @@ class DownloadStatusScanner(object):
 
     def __init__(self):
         fr = open('./config/config.yml', 'r')
-        config = yaml.load(fr)
+        config = yaml.safe_load(fr)
         if 'download_status_scanner' in config['task']:
             scan_time = '22:00'
             scan_time_format = '%H:%M'

@@ -32,7 +32,7 @@ class DownloadManager(object):
     def __init__(self, downloader_cls):
         self.downloader = downloader_cls(self.on_download_completed)
         fr = open('./config/config.yml', 'r')
-        config = yaml.load(fr)
+        config = yaml.safe_load(fr)
         self.base_path = config['download']['location']
 
     def connect(self):

@@ -9,13 +9,13 @@ from builtins import object
 from sqlalchemy import create_engine
 from sqlalchemy.engine.url import URL
 from sqlalchemy.orm import scoped_session, sessionmaker
-from yaml import load
+from yaml import safe_load
 
 
 class SessionManager(object):
 
     __fr = open('./config/config.yml', 'r')
-    __config = load(__fr)
+    __config = safe_load(__fr)
 
     __dbConfig = __config['database']
     # dsn = ' '.join('%s=%s' % (k,v) for k,v in dbConfig.items())

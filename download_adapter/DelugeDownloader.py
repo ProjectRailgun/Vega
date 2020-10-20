@@ -6,7 +6,7 @@ from future import standard_library
 standard_library.install_aliases()
 from builtins import *
 from Downloader import Downloader
-from yaml import load
+from yaml import safe_load
 from deluge.ui.client import client
 from twisted.internet.defer import inlineCallbacks, returnValue
 from utils.exceptions import SchedulerError
@@ -20,7 +20,7 @@ class DelugeDownloader(Downloader):
     def __init__(self, on_download_completed_callback):
 
         fr = open('./config/config.yml', 'r')
-        config = load(fr)
+        config = safe_load(fr)
         self.delugeConfig = config['deluge']
 
         self.__on_download_completed_callback = on_download_completed_callback
