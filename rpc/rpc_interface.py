@@ -255,7 +255,7 @@ def email_changed(email, user_id):
 
 
 @rpc_export
-def delete_deluge_torrent(torrent_id):
+def delete_torrent(torrent_id):
     from utils.DownloadManager import download_manager
 
     def on_success(info):

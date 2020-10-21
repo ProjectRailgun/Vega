@@ -505,7 +505,7 @@ class AdminService(object):
                 except Exception as error:
                     logger.error(error)
                 # remove torrent from deluge
-                rpc_request.send('delete_deluge_torrent', {'torrent_id': video_file.torrent_id})
+                rpc_request.send('delete_torrent', {'torrent_id': video_file.torrent_id})
                 # remove video_file
                 session.delete(video_file)
 
@@ -643,7 +643,7 @@ class AdminService(object):
                 except Exception as error:
                     logger.warning(error)
 
-            rpc_request.send('delete_deluge_torrent', {'torrent_id': video_file.torrent_id})
+            rpc_request.send('delete_torrent', {'torrent_id': video_file.torrent_id})
             session.delete(video_file)
 
             session.commit()

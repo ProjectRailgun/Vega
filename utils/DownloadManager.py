@@ -9,7 +9,6 @@ from builtins import *
 from builtins import object
 from twisted.internet.defer import inlineCallbacks, returnValue
 from twisted.internet import threads
-from download_adapter.DelugeDownloader import DelugeDownloader
 from domain.TorrentFile import TorrentFile
 from domain.Episode import Episode
 from domain.Bangumi import Bangumi
@@ -25,6 +24,14 @@ import logging
 import yaml
 
 logger = logging.getLogger(__name__)
+
+# loading specific downloader implementation
+fr = open('./config/config.yml', 'r')
+config = yaml.safe_load(fr)
+if config['downloader'] == 'deluge':
+    from download_adapter.DelugeDownloader import DelugeDownloader
+if config['downloader'] == 'transmission':
+    from download_adapter.TransmissionDownloader import TransmissionDownloader
 
 
 class DownloadManager(object):
@@ -43,7 +50,7 @@ class DownloadManager(object):
         return self.downloader.connect_to_daemon()
 
     def set_disconnect_cb(self, cb):
-        self.downloader.set_on_disconnect_cb(cb)
+        self.downloader.set_on_disconnect_callback(cb)
 
     def on_download_completed(self, torrent_id):
         logger.info('Download complete: %s', torrent_id)
@@ -168,4 +175,8 @@ class DownloadManager(object):
         returnValue(torrent_dict)
 
 
-download_manager = DownloadManager(DelugeDownloader)
+# initialize specific downloader
+if config['downloader'] == 'deluge':
+    download_manager = DownloadManager(DelugeDownloader)
+if config['downloader'] == 'transmission':
+    download_manager = DownloadManager(TransmissionDownloader)

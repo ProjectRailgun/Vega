@@ -10,7 +10,7 @@ from builtins import object
 class Downloader(object):
 
     def __init__(self, on_download_completed):
-        self.on_download_completed_callback = on_download_completed
+        self.__on_download_completed_callback = on_download_completed
 
     def download(self, magnet_uri, download_location):
         pass
@@ -25,6 +25,10 @@ class Downloader(object):
         pass
 
     def get_complete_torrents(self):
+        """
+        get complete torrents
+        :return: a dict which contains all complete torrents (progress = 100), key is torrent_id, value is dict {files: tuple}
+        """
         pass
 
     """
