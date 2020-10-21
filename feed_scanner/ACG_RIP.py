@@ -20,7 +20,7 @@ class ACG_RIP(AbstractScanner):
     def __init__(self, bangumi, episode_list):
         super(self.__class__, self).__init__(bangumi, episode_list)
         self.proxy = self._get_proxy('acg_rip')
-        keywords = urllib.parse.quote_plus(bangumi.acg_rip.replace(u'+', u' ').encode('utf-8'))
+        keywords = urllib.parse.quote_plus(bangumi.acg_rip.replace(u'+', u' '))
         self.feed_url = 'https://acg.rip/.xml?term=%s' % (keywords,)
         logger.debug(self.feed_url)
 

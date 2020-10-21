@@ -158,7 +158,7 @@ class ImportTools(object):
                                                             dominant_color=get_dominant_color(thumbnail_file_path),
                                                             width=width,
                                                             height=height)
-                                meta_dict = video_manager.get_video_meta(u'{0}/{1}/{2}'.format(video_manager.base_path, bangumi_id.encode('utf-8'), video_file.file_path))
+                                meta_dict = video_manager.get_video_meta(u'{0}/{1}/{2}'.format(video_manager.base_path, bangumi_id, video_file.file_path))
                                 if meta_dict is not None:
                                     video_file.resolution_w = meta_dict['width']
                                     video_file.resolution_h = meta_dict['height']

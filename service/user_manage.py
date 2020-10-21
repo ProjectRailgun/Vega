@@ -43,7 +43,7 @@ class UserManage(object):
                     filter(User.id == query_value). \
                     scalar()
             elif query_field is not None and query_value is not None:
-                value_pattern = '%{0}%'.format(query_value.encode('utf-8'), )
+                value_pattern = '%{0}%'.format(query_value, )
                 logger.debug(value_pattern)
                 query_object = query_object. \
                     filter(getattr(User, query_field).like(value_pattern))

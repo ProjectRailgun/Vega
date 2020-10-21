@@ -171,7 +171,7 @@ class BangumiService(object):
                 query_object = query_object.filter(Bangumi.type == bangumi_type)
 
             if name is not None:
-                name_pattern = '%{0}%'.format(name.encode('utf-8'),)
+                name_pattern = '%{0}%'.format(name,)
                 logger.debug(name_pattern)
                 query_object = query_object.\
                     filter(or_(Bangumi.name.ilike(name_pattern), Bangumi.name_cn.ilike(name_pattern)))

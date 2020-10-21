@@ -128,7 +128,7 @@ class AdminService(object):
         """
 
         result = {"data": [], "total": 0}
-        api_url = 'http://api.bgm.tv/search/subject/{0}?responseGroup=large&max_result={1}&start={2}&type={3}'.format(term.encode('utf-8'), count, offset, type)
+        api_url = 'http://api.bgm.tv/search/subject/{0}?responseGroup=large&max_result={1}&start={2}&type={3}'.format(term, count, offset, type)
         r = bangumi_request.get(api_url)
 
         if r.status_code > 399:
@@ -198,7 +198,7 @@ class AdminService(object):
                 query_object = query_object.filter(Bangumi.type == bangumi_type)
 
             if name is not None:
-                name_pattern = '%{0}%'.format(name.encode('utf-8'),)
+                name_pattern = '%{0}%'.format(name,)
                 logger.debug(name_pattern)
                 query_object = query_object.\
                     filter(or_(Bangumi.name.ilike(name_pattern), Bangumi.name_cn.ilike(name_pattern)))

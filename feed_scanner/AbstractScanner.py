@@ -50,7 +50,7 @@ class AbstractScanner(object):
             if not os.path.exists(self.bangumi_path):
                 os.makedirs(self.bangumi_path)
                 info_file = open(self.bangumi_path + '/info.txt', 'w')
-                info_file.write(self.bangumi.name.encode('utf-8'))
+                info_file.write(self.bangumi.name)
                 info_file.close()
                 logger.info('create dir for %s', bangumi.name)
         except OSError as exception:
