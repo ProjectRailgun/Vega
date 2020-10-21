@@ -25,7 +25,7 @@ class DMHY(AbstractScanner):
     def __init__(self, bangumi, episode_list):
         super(self.__class__, self).__init__(bangumi, episode_list)
         self.proxy = self._get_proxy('dmhy')
-        keywords = urllib.parse.quote_plus(bangumi.dmhy.replace(u'+', u' ').encode('utf-8'))
+        keywords = urllib.parse.quote_plus(bangumi.dmhy.replace(u'+', u' '))
         self.feed_url = 'https://share.dmhy.org/topics/rss/rss.xml?keyword=%s' % (keywords,)
 
     def _ensure_https(self, url):
