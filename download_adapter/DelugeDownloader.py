@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from future import standard_library
 standard_library.install_aliases()
 from builtins import *
-from Downloader import Downloader
+from .Downloader import Downloader
 from yaml import safe_load
 from deluge.ui.client import client
 from twisted.internet.defer import inlineCallbacks, returnValue
@@ -17,13 +17,12 @@ setupLogger(level='info')
 
 class DelugeDownloader(Downloader):
 
-    def __init__(self, on_download_completed_callback):
+    def __init__(self, on_download_completed):
+        super().__init__(on_download_completed)
 
         fr = open('./config/config.yml', 'r')
         config = safe_load(fr)
         self.delugeConfig = config['deluge']
-
-        self.__on_download_completed_callback = on_download_completed_callback
 
     def __on_connect_success(self, result):
         """
@@ -51,8 +50,7 @@ class DelugeDownloader(Downloader):
         client.set_disconnect_callback(cb)
 
     def __on_download_completed(self, torrent_id):
-        self.__on_download_completed_callback(torrent_id)
-
+        self.on_download_completed_callback(torrent_id)
 
     def __url_type(self, download_url):
         if download_url.startswith('magnet:?'):
