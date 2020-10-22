@@ -31,7 +31,7 @@ class VideoManager(object):
                                    '-ss',
                                    time,
                                    '-i',
-                                   b'{0}'.format(video_path),
+                                   video_path,
                                    '-vframes',
                                    '1',
                                    output_path])
@@ -82,7 +82,7 @@ class VideoManager(object):
                 'v:0',
                 '-of',
                 'json',
-                b'{0}'.format(video_path)
+                video_path
             ])
             meta = json.loads(output)
             result = {}
