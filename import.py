@@ -113,13 +113,13 @@ class ImportTools(object):
                 #     continue
                 episodes[eps.episode_no] = eps
                 for f in files:
-                    if self.__video_path_already_added(existed_video_files, f.decode('utf-8')):
+                    if self.__video_path_already_added(existed_video_files, f):
                         continue
                     if self.__parse_episode_number(f) + eps_no_offset == eps.episode_no:
                         eps.status = Episode.STATUS_DOWNLOADED
                         video_files.append(VideoFile(bangumi_id=bangumi_id,
                                                      episode_id=eps.id,
-                                                     file_path=f.decode('utf-8'),
+                                                     file_path=f,
                                                      status=VideoFile.STATUS_DOWNLOADED))
                         break
             while True:
@@ -136,7 +136,7 @@ class ImportTools(object):
                             else:
                                 line = line + "\n  \t" + video_file.file_path
                             if video_file.label is not None:
-                                line = line + "\t" + video_file.label.decode('utf-8')
+                                line = line + "\t" + video_file.label
                             file_name = video_file.file_path
                     if file_name is None:
                         line = line + "None"
@@ -185,7 +185,7 @@ class ImportTools(object):
                         eps.status = Episode.STATUS_DOWNLOADED
                         video_files.append(VideoFile(bangumi_id=bangumi_id,
                                                      episode_id=eps.id,
-                                                     file_path=f.decode('utf-8'),
+                                                     file_path=f,
                                                      label=label,
                                                      status=VideoFile.STATUS_DOWNLOADED))
         finally:
