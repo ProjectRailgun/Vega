@@ -2,6 +2,9 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
+
+import time
+
 from future import standard_library
 
 from os import path
@@ -10,7 +13,7 @@ from builtins import *
 from .Downloader import Downloader
 from yaml import safe_load
 from clutch import Client
-from twisted.internet import defer
+from twisted.internet import defer, threads
 from utils.exceptions import SchedulerError
 
 
@@ -45,6 +48,7 @@ class TransmissionDownloader(Downloader):
                 username=self.transmissionConfig['username'],
                 password=self.transmissionConfig['password'],
             )
+            self.__client.misc.port_test()
         except Exception as error:
             return defer.fail(SchedulerError('TransmissionDownloader: Connecting to transmission daemon failed: ' + format(error)))
         return defer.succeed('TransmissionDownloader: Connecting to transmission daemon succeed')
@@ -57,7 +61,21 @@ class TransmissionDownloader(Downloader):
         self.__disconnect_callback = callback
 
     def __on_download_completed(self, torrent_id):
-        self.__on_download_completed_callback(torrent_id)
+        self.on_download_completed_callback(str(torrent_id))
+
+    def __on_download_failed(self, error):
+        raise SchedulerError('TransmissionDownloader: Wait until download completed failed: ' + format(error))
+
+    def __wait_until_download_completed(self, torrent_id):
+        try:
+            while True:
+                time.sleep(30)
+                resp = self.__client.torrent.accessor(fields=['done_date'], ids=torrent_id).dict(exclude_none=True)
+                if resp['arguments']['torrents'][0]['done_date'] != 0:
+                    break
+        except Exception as error:
+            raise SchedulerError(error)
+        return torrent_id
 
     def __url_type(self, download_url):
         if download_url.startswith('magnet:?'):
@@ -78,23 +96,29 @@ class TransmissionDownloader(Downloader):
                 torrent_id = torrent.arguments.torrent_duplicate.id
             else:
                 return defer.fail(SchedulerError('TransmissionDownloader: Add torrent failed: unexpected RPC response content'))
+            d = threads.deferToThread(self.__wait_until_download_completed, torrent_id=torrent_id)
+            d.addCallback(self.__on_download_completed)
+            d.addErrback(self.__on_download_failed)
         except Exception as error:
             return defer.fail(SchedulerError('TransmissionDownloader: Add torrent failed: ' + format(error)))
-        return defer.succeed(torrent_id)
+        return defer.succeed(str(torrent_id))
 
     def get_files(self, torrent_id):
         try:
-            resp = self.__client.torrent.accessor(fields=['download_dir', 'files'], ids=[torrent_id]).dict(exclude_none=True)
+            resp = self.__client.torrent.accessor(fields=['download_dir', 'files'], ids=int(torrent_id)).dict(exclude_none=True)
             files = []
             for file in resp['arguments']['torrents'][0]['files']:
-                files.append({'path': path.join(resp['arguments']['torrents'][0]['download_dir'], file['name'])})
+                files.append({
+                    'path': file['name'],
+                    'size': file['bytes_completed'],
+                })
         except Exception as error:
             return defer.fail(SchedulerError('TransmissionDownloader: Get torrent files failed: ' + format(error)))
         return defer.succeed(files)
 
     def remove_torrent(self, torrent_id, remove_data):
         try:
-            remove = self.__client.torrent.remove(ids=[torrent_id], delete_local_data=remove_data).dict(exclude_none=True)
+            remove = self.__client.torrent.remove(ids=int(torrent_id), delete_local_data=remove_data).dict(exclude_none=True)
         except Exception as error:
             return defer.fail(SchedulerError('TransmissionDownloader: Get torrent files failed: ' + format(error)))
         return defer.succeed(remove)
@@ -108,11 +132,14 @@ class TransmissionDownloader(Downloader):
             resp = self.__client.torrent.accessor(fields=['id', 'done_date', 'download_dir', 'files']).dict(exclude_none=True)
             torrents = {}
             for torrent in resp['arguments']['torrents']:
-                if torrent['done_date'] is not 0:
+                if torrent['done_date'] != 0:
                     files = []
                     for file in torrent['files']:
-                        files.append({'path': path.join(torrent['download_dir'], file['name'])})
-                    torrents[torrent['id']] = {'files': files}
+                        files.append({
+                            'path': file['name'],
+                            'size': file['bytes_completed'],
+                        })
+                    torrents[str(torrent['id'])] = {'files': files}
         except Exception as error:
             return defer.fail(SchedulerError('TransmissionDownloader: Get complete torrents failed: ' + format(error)))
         return defer.succeed(torrents)
