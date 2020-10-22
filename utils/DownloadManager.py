@@ -19,6 +19,7 @@ from utils.VideoManager import video_manager
 from datetime import datetime
 from sqlalchemy import exc
 from utils.image import get_dominant_color, get_dimension
+from os import path
 from rpc.rpc_interface import episode_downloaded
 import logging
 import yaml
@@ -59,8 +60,8 @@ class DownloadManager(object):
             time = '00:00:08.000'
             video_manager.create_episode_thumbnail(episode, file_path, time)
             try:
-                thumbnail_path = '{0}/thumbnails/{1}.png'.format(str(episode.bangumi_id), episode.episode_no)
-                thumbnail_file_path = '{0}/{1}'.format(self.base_path, thumbnail_path)
+                thumbnail_path = path.join(str(episode.bangumi_id), 'thumbnails', episode.episode_no + '.png')
+                thumbnail_file_path = path.join(self.base_path, thumbnail_path)
                 color = get_dominant_color(thumbnail_file_path)
                 width, height = get_dimension(thumbnail_file_path)
                 episode.thumbnail_image = Image(file_path=thumbnail_path,
@@ -72,7 +73,7 @@ class DownloadManager(object):
                 logger.error(error, exc_info=True)
 
         def update_video_meta(video_file):
-            meta = video_manager.get_video_meta(u'{0}/{1}/{2}'.format(self.base_path, str(video_file.bangumi_id), video_file.file_path))
+            meta = video_manager.get_video_meta(path.join(self.base_path, str(video_file.bangumi_id), video_file.file_path))
             if meta is not None:
                 video_file.duration = meta.get('duration')
                 video_file.resolution_w = meta.get('width')

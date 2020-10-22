@@ -48,8 +48,8 @@ def upgrade():
         base_path = get_base_path()
         path = urlparse(bangumi_image).path
         extname = os.path.splitext(path)[1]
-        bangumi_path = base_path + '/' + str(bangumi_id)
-        cover_path = bangumi_path + '/cover' + extname
+        bangumi_path = os.path.join(base_path, str(bangumi_id))
+        cover_path = os.path.join(bangumi_path, 'cover' + extname)
         if not os.path.exists(bangumi_path):
             print('cover not found for {0}'.format(bangumi_id))
             continue
@@ -66,7 +66,7 @@ def upgrade():
         for eps in episode_result:
             episode_id = eps[0]
             episode_no = eps[1]
-            thumbnail_path = u'{0}/thumbnails/{1}.png'.format(bangumi_path, episode_no)
+            thumbnail_path = os.path.join(bangumi_path, 'thumbnails', episode_no + '.png')
             if not os.path.exists(thumbnail_path):
                 print('thumbnail not found for {0}'.format(episode_id))
                 continue

@@ -62,8 +62,8 @@ def upgrade():
         dominant_color = row[2]
         path = urlparse(bangumi_image).path
         extname = os.path.splitext(path)[1]
-        image_path = '{0}/cover{1}'.format(str(bangumi_id), extname)
-        if not os.path.exists('{0}/{1}'.format(base_path, image_path)):
+        image_path = os.path.join(str(bangumi_id), 'cover' + extname)
+        if not os.path.exists(os.path.join(base_path, image_path)):
             print('cover not found for {0}'.format(bangumi_id))
             continue
         try:
@@ -85,8 +85,8 @@ def upgrade():
             episode_id = eps[0]
             episode_no = eps[1]
             episode_thumbnail_color = eps[2]
-            thumbnail_path = '{0}/thumbnails/{1}.png'.format(str(bangumi_id), episode_no)
-            if not os.path.exists(u'{0}/{1}'.format(base_path, thumbnail_path)):
+            thumbnail_path = os.path.join(str(bangumi_id), 'thumbnails', episode_no + '.png')
+            if not os.path.exists(os.path.join(base_path, thumbnail_path)):
                 print('thumbnail not found for {0}'.format(episode_id))
                 continue
             try:
@@ -106,10 +106,10 @@ def upgrade():
         image_file_path = image[1]
         image_dominant_color = image[2]
         try:
-            im = Image.open('{0}/{1}'.format(base_path, image_file_path))
+            im = Image.open(os.path.join(base_path, image_file_path))
             (width, height) = im.size
             if image_dominant_color is None:
-                image_dominant_color = get_dominant_color('{0}/{1}'.format(base_path, image_file_path), 5)
+                image_dominant_color = get_dominant_color(os.path.join(base_path, image_file_path), 5)
             connection.execute(sa.text(
                 "UPDATE image SET width = '{0}', height = '{1}', dominant_color = '{2}' WHERE id = '{3}'".format(
                     width, height, image_dominant_color, image_id)))

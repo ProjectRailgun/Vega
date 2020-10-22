@@ -21,6 +21,7 @@ from domain.VideoFile import VideoFile
 from domain.WatchProgress import WatchProgress
 from domain.Favorites import Favorites
 from datetime import datetime
+from os import path
 
 import logging
 
@@ -79,8 +80,8 @@ class FeedScanner(object):
     def __create_thumbnail(self, episode, file_path):
         time = '00:00:08.000'
         video_manager.create_episode_thumbnail(episode, file_path, time)
-        thumbnail_path = '{0}/thumbnails/{1}.png'.format(str(episode.bangumi_id), episode.episode_no)
-        thumbnail_file_path = '{0}/{1}'.format(self.base_path, thumbnail_path)
+        thumbnail_path = path.join(str(episode.bangumi_id), 'thumbnails', episode.episode_no + '.png')
+        thumbnail_file_path = path.join(self.base_path, thumbnail_path)
         color = get_dominant_color(thumbnail_file_path)
         width, height = get_dimension(thumbnail_file_path)
         episode.thumbnail_image = Image(file_path=thumbnail_path,
@@ -90,7 +91,7 @@ class FeedScanner(object):
         episode.thumbnail_color = color
 
     def __update_video_meta(self, video_file):
-        meta = video_manager.get_video_meta(u'{0}/{1}/{2}'.format(self.base_path, str(video_file.bangumi_id), video_file.file_path))
+        meta = video_manager.get_video_meta(path.join(self.base_path, str(video_file.bangumi_id), video_file.file_path))
         if meta is not None:
             video_file.duration = meta.get('duration')
             video_file.resolution_w = meta.get('width')
@@ -126,7 +127,7 @@ class FeedScanner(object):
 
         for download_url, same_torrent_video_file_list in download_url_dict.items():
             first_video_file = same_torrent_video_file_list[0]
-            bangumi_path = self.base_path + '/' + str(first_video_file.bangumi_id)
+            bangumi_path = path.join(self.base_path, str(first_video_file.bangumi_id))
             try:
                 torrent_id = yield download_manager.download(first_video_file.download_url, bangumi_path)
                 logger.info(torrent_id)

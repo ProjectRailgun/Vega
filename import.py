@@ -91,7 +91,7 @@ class ImportTools(object):
     def update_bangumi(self, bangumi_id=None):
         fr = open('./config/config.yml', 'r')
         config = yaml.safe_load(fr)
-        download_dir = config['download']['location'] + '/' + str(bangumi_id)
+        download_dir = os.path.join(config['download']['location'], str(bangumi_id))
         files = self.__list_file_recursively(download_dir)
 
         session = SessionManager.Session()
@@ -151,14 +151,14 @@ class ImportTools(object):
                         for eps in list(episodes.values()):
                             if eps.id == video_file.episode_id:
                                 video_manager.create_episode_thumbnail(eps, video_file.file_path, '00:00:01.000')
-                                thumbnail_path = '{0}/thumbnails/{1}.png'.format(str(bangumi_id), eps.episode_no)
-                                thumbnail_file_path = '{0}/thumbnails/{1}.png'.format(download_dir, eps.episode_no)
+                                thumbnail_path = os.path.join(str(bangumi_id), 'thumbnails', eps.episode_no + '.png')
+                                thumbnail_file_path = os.path.join(download_dir, 'thumbnails', eps.episode_no + '.png')
                                 width, height = get_dimension(thumbnail_file_path)
                                 eps.thumbnail_image = Image(file_path=thumbnail_path,
                                                             dominant_color=get_dominant_color(thumbnail_file_path),
                                                             width=width,
                                                             height=height)
-                                meta_dict = video_manager.get_video_meta(u'{0}/{1}/{2}'.format(video_manager.base_path, bangumi_id, video_file.file_path))
+                                meta_dict = video_manager.get_video_meta(os.path.join(video_manager.base_path, bangumi_id, video_file.file_path))
                                 if meta_dict is not None:
                                     video_file.resolution_w = meta_dict['width']
                                     video_file.resolution_h = meta_dict['height']

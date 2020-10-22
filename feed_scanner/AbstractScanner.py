@@ -31,7 +31,7 @@ class AbstractScanner(object):
         config = yaml.safe_load(fr)
         self.base_path = config['download']['location']
         self.feedparser = config['feedparser']
-        self.bangumi_path = self.base_path + '/' + str(bangumi.id)
+        self.bangumi_path = os.path.join(self.base_path, str(bangumi.id))
 
         self.bangumi = bangumi
         self.episode_list = episode_list

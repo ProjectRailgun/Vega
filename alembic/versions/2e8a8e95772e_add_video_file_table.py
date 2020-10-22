@@ -23,6 +23,7 @@ depends_on = None
 from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
+import os
 import re
 import yaml
 from uuid import uuid4
@@ -79,7 +80,8 @@ def upgrade():
         video_file['bangumi_id'] = row[3]
 
         meta_info = video_manager.get_video_meta(
-            u'{0}/{1}/{2}'.format(get_base_path(), str(video_file['bangumi_id']), video_file['file_path']))
+            os.path.join(get_base_path(), str(video_file['bangumi_id']), video_file['file_path'])
+        )
 
         if meta_info is None:
             continue

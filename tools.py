@@ -117,7 +117,7 @@ elif args.cover:
     for bangumi in cur:
         if bangumi.image is not None:
             try:
-                bangumi_dir = download_location + '/' + str(bangumi.id)
+                bangumi_dir = os.path.join(download_location, str(bangumi.id))
                 # if bangumi folder is not existence create it
                 if not os.path.exists(bangumi_dir):
                     os.makedirs(bangumi_dir)
@@ -139,7 +139,7 @@ elif args.cover:
                 if bangumi.cover_image_id is None:
                     try:
                         width, height = get_dimension(bangumi_cover_path)
-                        cover_image = Image(file_path='{0}/cover{1}'.format(str(bangumi.id), extname),
+                        cover_image = Image(file_path=os.path.join(str(bangumi.id), 'cover' + extname),
                                             dominant_color=bangumi.cover_color,
                                             width=width,
                                             height=height)
@@ -158,15 +158,15 @@ elif args.cover:
         eps_cur = session.query(Episode).filter(Episode.bangumi_id == bangumi.id)
         for episode in eps_cur:
             if episode.status == Episode.STATUS_DOWNLOADED and episode.thumbnail_color is None:
-                thumbnail_path = '{0}/{1}/thumbnails/{2}.png'.format(download_location, str(bangumi.id), str(episode.episode_no))
+                thumbnail_path = os.path.join(download_location, str(bangumi.id), 'thumbnails', str(episode.episode_no))
                 try:
                     episode.thumbnail_color = get_dominant_color(thumbnail_path, 5)
                     session.commit()
                 except Exception as err:
                     print(err)
             if episode.status == Episode.STATUS_DOWNLOADED and episode.thumbnail_image_id is None:
-                thumbnail_path = '{0}/thumbnails/{1}.png'.format(str(bangumi.id), str(episode.episode_no))
-                thumbnail_file_path = '{0}/{1}'.format(download_location, thumbnail_path)
+                thumbnail_path = os.path.join(str(bangumi.id), 'thumbnails', episode.episode_no + '.png')
+                thumbnail_file_path = os.path.join(download_location, thumbnail_path)
                 width, height = get_dimension(thumbnail_file_path)
                 thumbnail_image = Image(file_path=thumbnail_path,
                                         dominant_color=episode.thumbnail_color,

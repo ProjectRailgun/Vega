@@ -90,7 +90,7 @@ class AdminService(object):
     def __save_bangumi_cover(self, bangumi):
         if not bangumi.image:
             return
-        bangumi_path = self.base_path + '/' + str(bangumi.id)
+        bangumi_path = os.path.join(self.base_path, str(bangumi.id))
         try:
             if not os.path.exists(bangumi_path):
                 os.makedirs(bangumi_path)
@@ -105,8 +105,8 @@ class AdminService(object):
 
         path = urlparse(bangumi.image).path
         extname = os.path.splitext(path)[1]
-        cover_path = '{0}/cover{1}'.format(str(bangumi.id), extname)
-        file_path = '{0}/{1}'.format(self.base_path, cover_path)
+        cover_path = os.path.join(str(bangumi.id), 'cover' + extname)
+        file_path = os.path.join(self.base_path, cover_path)
         self.file_downloader.download_file(bangumi.image, file_path)
         return file_path, cover_path
 
@@ -488,7 +488,7 @@ class AdminService(object):
                 filter(Episode.id == episode_id).one()
 
             # remove files of episode
-            bangumi_folder_path = '{0}/{1}'.format(self.base_path, str(episode.bangumi_id))
+            bangumi_folder_path = os.path.join(self.base_path, str(episode.bangumi_id))
 
             video_file_list = session.query(VideoFile). \
                 filter(VideoFile.episode_id == episode_id). \
@@ -500,7 +500,7 @@ class AdminService(object):
             for video_file in video_file_list:
                 # remove torrent
                 try:
-                    file_path = '{0}/{1}'.format(bangumi_folder_path, video_file.file_path)
+                    file_path = os.path.join(bangumi_folder_path, video_file.file_path)
                     os.remove(file_path)
                 except Exception as error:
                     logger.error(error)
@@ -637,7 +637,7 @@ class AdminService(object):
             session = SessionManager.Session()
             video_file = session.query(VideoFile).filter(VideoFile.id == video_file_id).one()
             if video_file.file_path is not None and video_file.status == VideoFile.STATUS_DOWNLOADED:
-                file_abs_path = u'{0}/{1}/{2}'.format(self.base_path, str(video_file.bangumi_id), video_file.file_path)
+                file_abs_path = os.path.join(self.base_path, str(video_file.bangumi_id), video_file.file_path)
                 try:
                     os.remove(file_abs_path)
                 except Exception as error:

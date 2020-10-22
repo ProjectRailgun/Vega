@@ -42,9 +42,9 @@ class VideoManager(object):
 
     def create_episode_thumbnail(self, episode, relative_path, time):
         bangumi_id = str(episode.bangumi_id)
-        video_path = u'{0}/{1}/{2}'.format(self.base_path, bangumi_id, relative_path)
-        thumbnail_folder = u'{0}/{1}/thumbnails'.format(self.base_path, bangumi_id)
-        output_path = u'{0}/{1}.png'.format(thumbnail_folder, str(episode.episode_no))
+        video_path = os.path.join(self.base_path, bangumi_id, relative_path)
+        thumbnail_folder = os.path.join(self.base_path, bangumi_id, 'thumbnails')
+        output_path = os.path.join(thumbnail_folder, str(episode.episode_no) + '.png')
         try:
             if not os.path.exists(thumbnail_folder):
                 os.makedirs(thumbnail_folder)

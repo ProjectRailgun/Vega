@@ -9,6 +9,7 @@ from builtins import *
 from builtins import object
 import json
 import logging
+import os
 import shutil
 from datetime import datetime, timedelta
 from twisted.internet import threads, reactor
@@ -106,7 +107,7 @@ class DeleteScanner(object):
             self.__unshift_task_step(task_content, task, session)
 
             # remove files of bangumi
-            bangumi_folder_path = '{0}/{1}'.format(self.base_path, str(bangumi.id))
+            bangumi_folder_path = os.path.join(self.base_path, str(bangumi.id))
             shutil.rmtree(bangumi_folder_path, ignore_errors=True)
             task_content['task_step'].pop(0)
             task.content = json.dumps(task_content)
