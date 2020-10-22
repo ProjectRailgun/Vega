@@ -10,7 +10,7 @@ from builtins import object
 class Downloader(object):
 
     def __init__(self, on_download_completed):
-        self.__on_download_completed_callback = on_download_completed
+        self.on_download_completed_callback = on_download_completed
 
     def download(self, magnet_uri, download_location):
         pass

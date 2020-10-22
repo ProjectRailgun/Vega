@@ -50,7 +50,7 @@ class DelugeDownloader(Downloader):
         client.set_disconnect_callback(cb)
 
     def __on_download_completed(self, torrent_id):
-        self.__on_download_completed_callback(torrent_id)
+        self.on_download_completed_callback(torrent_id)
 
     def __url_type(self, download_url):
         if download_url.startswith('magnet:?'):
