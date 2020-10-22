@@ -60,7 +60,7 @@ class DownloadManager(object):
             time = '00:00:08.000'
             video_manager.create_episode_thumbnail(episode, file_path, time)
             try:
-                thumbnail_path = path.join(str(episode.bangumi_id), 'thumbnails', episode.episode_no + '.png')
+                thumbnail_path = path.join(str(episode.bangumi_id), 'thumbnails', str(episode.episode_no) + '.png')
                 thumbnail_file_path = path.join(self.base_path, thumbnail_path)
                 color = get_dominant_color(thumbnail_file_path)
                 width, height = get_dimension(thumbnail_file_path)

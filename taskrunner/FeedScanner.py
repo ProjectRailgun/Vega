@@ -80,7 +80,7 @@ class FeedScanner(object):
     def __create_thumbnail(self, episode, file_path):
         time = '00:00:08.000'
         video_manager.create_episode_thumbnail(episode, file_path, time)
-        thumbnail_path = path.join(str(episode.bangumi_id), 'thumbnails', episode.episode_no + '.png')
+        thumbnail_path = path.join(str(episode.bangumi_id), 'thumbnails', str(episode.episode_no) + '.png')
         thumbnail_file_path = path.join(self.base_path, thumbnail_path)
         color = get_dominant_color(thumbnail_file_path)
         width, height = get_dimension(thumbnail_file_path)
@@ -130,7 +130,7 @@ class FeedScanner(object):
             bangumi_path = path.join(self.base_path, str(first_video_file.bangumi_id))
             try:
                 torrent_id = yield download_manager.download(first_video_file.download_url, bangumi_path)
-                logger.info(torrent_id)
+                logger.info('torrent_id: ' + torrent_id)
                 if torrent_id is None:
                     logger.warning('episode %s already in download queue', str(first_video_file.episode_id))
                 else:

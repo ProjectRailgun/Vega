@@ -165,7 +165,7 @@ elif args.cover:
                 except Exception as err:
                     print(err)
             if episode.status == Episode.STATUS_DOWNLOADED and episode.thumbnail_image_id is None:
-                thumbnail_path = os.path.join(str(bangumi.id), 'thumbnails', episode.episode_no + '.png')
+                thumbnail_path = os.path.join(str(bangumi.id), 'thumbnails', str(episode.episode_no) + '.png')
                 thumbnail_file_path = os.path.join(download_location, thumbnail_path)
                 width, height = get_dimension(thumbnail_file_path)
                 thumbnail_image = Image(file_path=thumbnail_path,

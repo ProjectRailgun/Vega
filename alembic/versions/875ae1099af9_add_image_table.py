@@ -85,7 +85,7 @@ def upgrade():
             episode_id = eps[0]
             episode_no = eps[1]
             episode_thumbnail_color = eps[2]
-            thumbnail_path = os.path.join(str(bangumi_id), 'thumbnails', episode_no + '.png')
+            thumbnail_path = os.path.join(str(bangumi_id), 'thumbnails', str(episode_no) + '.png')
             if not os.path.exists(os.path.join(base_path, thumbnail_path)):
                 print('thumbnail not found for {0}'.format(episode_id))
                 continue

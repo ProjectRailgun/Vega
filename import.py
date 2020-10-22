@@ -151,8 +151,8 @@ class ImportTools(object):
                         for eps in list(episodes.values()):
                             if eps.id == video_file.episode_id:
                                 video_manager.create_episode_thumbnail(eps, video_file.file_path, '00:00:01.000')
-                                thumbnail_path = os.path.join(str(bangumi_id), 'thumbnails', eps.episode_no + '.png')
-                                thumbnail_file_path = os.path.join(download_dir, 'thumbnails', eps.episode_no + '.png')
+                                thumbnail_path = os.path.join(str(bangumi_id), 'thumbnails', str(eps.episode_no) + '.png')
+                                thumbnail_file_path = os.path.join(download_dir, 'thumbnails', str(eps.episode_no) + '.png')
                                 width, height = get_dimension(thumbnail_file_path)
                                 eps.thumbnail_image = Image(file_path=thumbnail_path,
                                                             dominant_color=get_dominant_color(thumbnail_file_path),
