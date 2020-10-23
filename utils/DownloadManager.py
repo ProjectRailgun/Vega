@@ -21,6 +21,7 @@ from sqlalchemy import exc
 from utils.image import get_dominant_color, get_dimension
 from os import path
 from rpc.rpc_interface import episode_downloaded
+from utils.exceptions import SchedulerError
 import logging
 import yaml
 
@@ -29,6 +30,8 @@ logger = logging.getLogger(__name__)
 # loading specific downloader implementation
 fr = open('./config/config.yml', 'r')
 config = yaml.safe_load(fr)
+if not config['downloader'] in ('deluge', 'transmission'):
+    raise SchedulerError('Invalid downloader value in config.yml')
 if config['downloader'] == 'deluge':
     from download_adapter.DelugeDownloader import DelugeDownloader
 if config['downloader'] == 'transmission':
