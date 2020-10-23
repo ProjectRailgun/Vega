@@ -5,11 +5,19 @@ database:
   host: 127.0.0.1
   port: 5432
 
+downloader: transmission
+
 deluge:
   host: 127.0.0.1
   port: 58846
   username: ''
   password: deluge
+
+transmission:
+  host: 127.0.0.1
+  port: 9091
+  username: transmission
+  password: transmission
 
 task:
   interval: 15  # unit minute
