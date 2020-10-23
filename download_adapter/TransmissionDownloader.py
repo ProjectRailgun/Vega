@@ -69,7 +69,7 @@ class TransmissionDownloader(Downloader):
     def __wait_until_download_completed(self, torrent_id):
         try:
             while True:
-                time.sleep(30)
+                time.sleep(60)
                 resp = self.__client.torrent.accessor(fields=['done_date'], ids=torrent_id).dict(exclude_none=True)
                 if resp['arguments']['torrents'][0]['done_date'] != 0:
                     break
