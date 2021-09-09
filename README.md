@@ -14,4 +14,4 @@ Please see [the original README](README.upstream.md) from upstream project.
 
 This project is licensed under the GNU Affero General Public License v3.0. You could obtain a copy of the license by downloading the [LICENSE](LICENSE) file in the repository.
 
-This project is based on [lordfriend/Albireo](github.com/lordfriend/Albireo) by Nyasoft. Thanks for his/her brilliant work.
+This project is based on [lordfriend/Albireo](https://github.com/lordfriend/Albireo) by Nyasoft. Thanks for his/her brilliant work.
