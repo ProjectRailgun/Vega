@@ -79,7 +79,10 @@ class FileDownloader(object):
             'User-Agent': user_agent
         })
 
-    def download_file(self, url, file_path):
+    def download_file(self, url, file_path, force_https=False):
+        if force_https and url.startswith('http://'):
+            url = url.replace('http://', 'https://', 1)
+        print url
         r = self.session.get(url, stream=True)
 
         if r.status_code > 399:
