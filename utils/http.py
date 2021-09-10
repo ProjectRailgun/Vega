@@ -82,7 +82,7 @@ class FileDownloader(object):
     def download_file(self, url, file_path, force_https=False):
         if force_https and url.startswith('http://'):
             url = url.replace('http://', 'https://', 1)
-        print url
+        print(url)
         r = self.session.get(url, stream=True)
 
         if r.status_code > 399:
@@ -123,14 +123,14 @@ class BangumiRequest(object):
             with open(self.api_bgm_tv_session_path, 'rb') as f:
                 self.session.cookies = requests.utils.cookiejar_from_dict(pickle.load(f))
         except Exception as error:
-            logger.warning(traceback.format_exc(error))
+            logger.warning(traceback.format_exc())
 
     def __save_cookie_to_storage(self):
         try:
             with open(self.api_bgm_tv_session_path, 'wb') as f:
                 pickle.dump(requests.utils.dict_from_cookiejar(self.session.cookies), f)
         except Exception as error:
-            logger.warning(traceback.format_exc(error))
+            logger.warning(traceback.format_exc())
 
     def get(self, url):
         self.__get_cookie_from_storage()
@@ -168,14 +168,14 @@ class BangumiMoeRequest(object):
             with open(self.api_bgm_tv_session_path, 'rb') as f:
                 self.session.cookies = requests.utils.cookiejar_from_dict(pickle.load(f))
         except Exception as error:
-            logger.warning(traceback.format_exc(error))
+            logger.warning(traceback.format_exc())
 
     def __save_cookie_to_storage(self):
         try:
             with open(self.api_bgm_tv_session_path, 'wb') as f:
                 pickle.dump(requests.utils.dict_from_cookiejar(self.session.cookies), f)
         except Exception as error:
-            logger.warning(traceback.format_exc(error))
+            logger.warning(traceback.format_exc())
 
     def post(self, url, payload):
         self.__get_cookie_from_storage()
