@@ -10,6 +10,7 @@ from utils.exceptions import SchedulerError
 import json
 import socket
 import requests
+import re
 
 import logging
 
@@ -47,7 +48,7 @@ class UNIVERSAL(AbstractScanner):
         result_list = []
 
         for item in item_array:
-            eps_list = []
+            eps_list = dict()
             for media_file in item['files']:
                 logger.error(media_file)
                 if media_file['ext'] is not None and media_file['ext'].lower() not in ('.mp4', ',mkv'):
@@ -55,27 +56,39 @@ class UNIVERSAL(AbstractScanner):
                 eps_no = self.parse_episode_number(media_file['name'])
                 if len(item_array) == 1 and eps_no == -1:
                     eps_no = 1
+                file_size = self.parse_size(media_file['size'])
                 if eps_no in eps_no_list:
-                    eps_list.append({
-                        'eps_no': eps_no,
-                        'file_path': media_file['path'],
-                        'file_name': media_file['name']
-                    })
+                    if eps_no not in eps_list:
+                        eps_list[eps_no] = {
+                            'file_path': media_file['path'],
+                            'file_name': media_file['name'],
+                            'file_size': file_size
+                        }
+                    else:
+                        if file_size > eps_list[eps_no]['file_size']:
+                            eps_list[eps_no] = {
+                                'file_path': media_file['path'],
+                                'file_name': media_file['name'],
+                                'file_size': file_size
+                            }
             if len(eps_list) == 0:
                 continue
-            for eps in eps_list:
+            for eps_no, eps_data in eps_list.items():
                 if self.mode == 'nyaa' or self.mode == 'dmhy':
                     download_uri = item['magnet_uri']
                 else:
                     download_uri = item['torrent_url']
-                result_list.append((download_uri, eps['eps_no'], eps['file_path'], eps['file_name']))
+                result_list.append((download_uri, eps_no, eps_data['file_path'], eps_data['file_name']))
 
-        logger.debug(result_list)
+        logger.error(result_list)
 
         return result_list
 
     def parse_size(self, size):
         units = {"B": 1, "KB": 10 ** 3, "MB": 10 ** 6, "GB": 10 ** 9, "TB": 10 ** 12}
+        size = size.upper()
+        if not re.match(r' ', size):
+            size = re.sub(r'([KMGT]?B)', r' \1', size)
         number, unit = [string.strip() for string in size.split()]
         return int(float(number) * units[unit])
 

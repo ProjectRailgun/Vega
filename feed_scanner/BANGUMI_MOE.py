@@ -8,7 +8,7 @@ from builtins import str
 from builtins import *
 from feed_scanner.AbstractScanner import AbstractScanner
 from utils.exceptions import SchedulerError
-import json, socket, requests, os
+import json, socket, requests, os, re
 
 import logging
 
@@ -43,9 +43,10 @@ class BANGUMI_MOE(AbstractScanner):
         result_list = []
 
         for torrent in resp_body['torrents']:
-            eps_list = []
+            eps_list = dict()
             for content_file in torrent['content']:
                 file_path = content_file[0]
+                file_size = self.parse_size(content_file[1])
                 file_name = os.path.basename(file_path)
                 if not file_name.endswith(('.mp4', '.mkv')):
                     continue
@@ -53,16 +54,24 @@ class BANGUMI_MOE(AbstractScanner):
                 if len(resp_body['torrents']) == 1 and eps_no == -1:
                     eps_no = 1
                 if eps_no in eps_no_list:
-                    eps_list.append({
-                        'eps_no': eps_no,
-                        'file_path': file_path,
-                        'file_name': file_name
-                    })
+                    if eps_no not in eps_list:
+                        eps_list[eps_no] = {
+                            'file_path': file_path,
+                            'file_name': file_name,
+                            'file_size': file_size
+                        }
+                    else:
+                        if file_size > eps_list[eps_no]['file_size']:
+                            eps_list[eps_no] = {
+                                'file_path': file_path,
+                                'file_name': file_name,
+                                'file_size': file_size
+                            }
             if len(eps_list) == 0:
                 continue
             torrent_url = self.generate_torrent_url(torrent['_id'], eps_list)
-            for eps in eps_list:
-                result_list.append((torrent_url, eps['eps_no'], eps['file_path'], eps['file_name']))
+            for eps_no, eps_data in eps_list.items():
+                result_list.append((torrent_url, eps_no, eps_data['file_path'], eps_data['file_name']))
 
         logger.debug(result_list)
 
@@ -70,12 +79,19 @@ class BANGUMI_MOE(AbstractScanner):
 
     def generate_torrent_url(self, torrent_id, eps_list):
         if len(eps_list) > 1:
-            eps_no_format = '{0}-{1}'.format(str(eps_list[0]['eps_no']), str(eps_list[-1]['eps_no']))
+            eps_no_format = '{0}-{1}'.format(str(list(eps_list)[0]), str(list(eps_list)[-1]))
         else:
-            eps_no_format = str(eps_list[0]['eps_no'])
+            eps_no_format = str(list(eps_list)[0])
         return 'https://bangumi.moe/download/torrent/{0}/{1}-{2}.torrent'.format(
             torrent_id, str(self.bangumi.id), eps_no_format)
 
+    def parse_size(self, size):
+        units = {"B": 1, "KB": 10 ** 3, "MB": 10 ** 6, "GB": 10 ** 9, "TB": 10 ** 12}
+        size = size.upper()
+        if not re.match(r' ', size):
+            size = re.sub(r'([KMGT]?B)', r' \1', size)
+        number, unit = [string.strip() for string in size.split()]
+        return int(float(number) * units[unit])
 
     @classmethod
     def has_keyword(cls, bangumi):
