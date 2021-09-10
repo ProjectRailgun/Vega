@@ -43,7 +43,7 @@ class CommonUtils(object):
                 print(exception)
 
     def generate_thumbnail_link(self, episode, bangumi):
-        thumbnail_url = '/pic/{0}/thumbnails/{1}.png'.format(str(bangumi.id), str(episode.episode_no))
+        thumbnail_url = '/image/{0}/thumbnails/{1}.png'.format(str(bangumi.id), str(episode.episode_no))
         if self.image_domain is not None:
             thumbnail_url = self.image_domain + thumbnail_url
         return thumbnail_url
@@ -51,7 +51,7 @@ class CommonUtils(object):
     def generate_cover_link(self, bangumi):
         path = urlparse(bangumi.image).path
         extname = os.path.splitext(path)[1]
-        cover_url = '/pic/{0}/cover{1}'.format(str(bangumi.id), extname)
+        cover_url = '/image/{0}/cover{1}'.format(str(bangumi.id), extname)
         if self.image_domain is not None:
             cover_url = self.image_domain + cover_url
         return cover_url
@@ -64,7 +64,7 @@ class CommonUtils(object):
 
     def convert_image_dict(self, image_dict):
         new_dict = {
-            'url': '/pic/{0}'.format(image_dict['file_path']),
+            'url': '/image/{0}'.format(image_dict['file_path']),
             'dominant_color': image_dict.get('dominant_color'),
             'width': image_dict.get('width'),
             'height': image_dict.get('height')
