@@ -49,7 +49,8 @@ class UNIVERSAL(AbstractScanner):
         for item in item_array:
             eps_list = []
             for media_file in item['files']:
-                if media_file['ext'] is not None and media_file['ext'].lower() != '.mp4':
+                logger.error(media_file)
+                if media_file['ext'] is not None and media_file['ext'].lower() not in ('.mp4', ',mkv'):
                     continue
                 eps_no = self.parse_episode_number(media_file['name'])
                 if len(item_array) == 1 and eps_no == -1:
@@ -72,6 +73,11 @@ class UNIVERSAL(AbstractScanner):
         logger.debug(result_list)
 
         return result_list
+
+    def parse_size(self, size):
+        units = {"B": 1, "KB": 10 ** 3, "MB": 10 ** 6, "GB": 10 ** 9, "TB": 10 ** 12}
+        number, unit = [string.strip() for string in size.split()]
+        return int(float(number) * units[unit])
 
     @classmethod
     def has_keyword(cls, bangumi):
