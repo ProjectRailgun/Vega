@@ -1,0 +1,30 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+feedparser = "*"
+service-identity = "*"
+requests = ">=2.4.2"
+alembic = "*"
+subprocess32 = "*"
+cfscrape = "*"
+colorthief = "*"
+sender = "*"
+raven = "*"
+bleach = "*"
+future = "*"
+SQLAlchemy = ">=1.0"
+Flask = "*"
+Flask-Login = "*"
+PyYAML = "*"
+Twisted = "*"
+Flask-Mail = "*"
+psycopg2 = "*"
+transmission-clutch = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
