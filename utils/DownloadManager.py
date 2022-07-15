@@ -60,7 +60,7 @@ class DownloadManager(object):
         logger.info('Download complete: %s', torrent_id)
 
         def create_thumbnail(episode, file_path):
-            time = '00:00:08.000'
+            time = '00:00:02.000'
             video_manager.create_episode_thumbnail(episode, file_path, time)
             try:
                 thumbnail_path = path.join(str(episode.bangumi_id), 'thumbnails', str(episode.episode_no) + '.png')
