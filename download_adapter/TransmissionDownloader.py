@@ -48,7 +48,9 @@ class TransmissionDownloader(Downloader):
                 username=self.transmissionConfig['username'],
                 password=self.transmissionConfig['password'],
             )
-            self.__client.misc.port_test()
+            rpc = self.__client.session.stats()
+            if rpc.result != 'success':
+                return defer.fail(SchedulerError('TransmissionDownloader: Connecting to transmission daemon failed'))
         except Exception as error:
             return defer.fail(SchedulerError('TransmissionDownloader: Connecting to transmission daemon failed: ' + format(error)))
         return defer.succeed('TransmissionDownloader: Connecting to transmission daemon succeed')
