@@ -17,3 +17,4 @@ bleach
 future
 psycopg2
 transmission-clutch
+gevent
